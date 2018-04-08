@@ -21,9 +21,24 @@ namespace SchoolService_Master.Controllers
         private SchoolServiceContext db = new SchoolServiceContext();
 
         // GET: api/GeoHierarchies
-        public IQueryable<GeoHierarchy> GetGeoHierarchies()
+        public IQueryable<GeoHierarchyViewModel> GetGeoHierarchies()
         {
-            return db.GeoHierarchies;
+            var geohierarchies = from GH in db.GeoHierarchies
+                                 join COU in db.Countries on GH.CountryId equals COU.Id
+                                 join STA in db.States on GH.StateId equals STA.Id
+                                 join ZON in db.Zones on GH.ZoneId equals ZON.Id
+                                 join BRA in db.Branches on GH.BranchId equals BRA.Id
+                                 join SUP in db.Supervisors on GH.SupervisorId equals SUP.Id
+                                 select new GeoHierarchyViewModel
+                                 {
+                                     CountryName = COU.CountryrName,
+                                     StateName = STA.StateName,
+                                     ZoneName = ZON.ZoneName,
+                                     BranchName = BRA.BranchName,
+                                     SupervisorName = SUP.SupervisorName,
+                                     MarketingHierarchyUser = GH.MarketingHierarchyUser,
+                                 };
+            return geohierarchies;
         }
 
         // GET: api/GeoHierarchies/5
@@ -48,7 +63,7 @@ namespace SchoolService_Master.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != geoHierarchy.id)
+            if (id != geoHierarchy.Id)
             {
                 return BadRequest();
             }
@@ -88,14 +103,14 @@ namespace SchoolService_Master.Controllers
                 {
                     db.GeoHierarchies.Add(new GeoHierarchy
                     {
-                        countryId = geoHierarchy.CountryId,
-                        zoneId = geoHierarchy.ZoneId,
-                        branchId = geoHierarchy.BranchId,
-                        stateId = geoHierarchy.StateId,
-                        supervisorId = geoHierarchy.SupervisorId,
-                        marketingHierarchyUser = geoHierarchy.MarketingHierarchyUser,
-                        created = DateTime.Now,
-                        updated = DateTime.Now
+                        CountryId = geoHierarchy.CountryId,
+                        ZoneId = geoHierarchy.ZoneId,
+                        BranchId = geoHierarchy.BranchId,
+                        StateId = geoHierarchy.StateId,
+                        SupervisorId = geoHierarchy.SupervisorId,
+                        MarketingHierarchyUser = geoHierarchy.MarketingHierarchyUser,
+                        Created = DateTime.Now,
+                        Updated = DateTime.Now
                     });
                     await db.SaveChangesAsync();
                     List<SchoolGeoHierarchyMapping> schoolGeoHierarchyMapping = new List<SchoolGeoHierarchyMapping>();
@@ -145,7 +160,7 @@ namespace SchoolService_Master.Controllers
 
         private bool GeoHierarchyExists(int id)
         {
-            return db.GeoHierarchies.Count(e => e.id == id) > 0;
+            return db.GeoHierarchies.Count(e => e.Id == id) > 0;
         }
     }
 }
