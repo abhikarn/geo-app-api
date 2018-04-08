@@ -88,12 +88,12 @@ namespace SchoolService_Master.Controllers
                 {
                     db.GeoHierarchies.Add(new GeoHierarchy
                     {
-                        countryId = geoHierarchy.countryId,
-                        zoneId = geoHierarchy.zoneId,
-                        branchId = geoHierarchy.branchId,
-                        stateId = geoHierarchy.stateId,
-                        supervisorId = geoHierarchy.supervisorId,
-                        marketingHierarchyUser = geoHierarchy.marketingHierarchyUser,
+                        countryId = geoHierarchy.CountryId,
+                        zoneId = geoHierarchy.ZoneId,
+                        branchId = geoHierarchy.BranchId,
+                        stateId = geoHierarchy.StateId,
+                        supervisorId = geoHierarchy.SupervisorId,
+                        marketingHierarchyUser = geoHierarchy.MarketingHierarchyUser,
                         created = DateTime.Now,
                         updated = DateTime.Now
                     });
@@ -101,7 +101,7 @@ namespace SchoolService_Master.Controllers
                     List<SchoolGeoHierarchyMapping> schoolGeoHierarchyMapping = new List<SchoolGeoHierarchyMapping>();
                     foreach (SchoolGeoHierarchyMappingViewModel item in geoHierarchy.SchoolGeoHierarchyMappingViewModels)
                     {
-                        schoolGeoHierarchyMapping.Add(new SchoolGeoHierarchyMapping { SchoolId = item.id, GeoHierarchyId = geoHierarchy.id });
+                        schoolGeoHierarchyMapping.Add(new SchoolGeoHierarchyMapping { SchoolId = item.id, GeoHierarchyId = geoHierarchy.Id });
                     }
                     db.SchoolGeoHierarchyMapping.AddRange(schoolGeoHierarchyMapping);
                     await db.SaveChangesAsync();
@@ -115,7 +115,7 @@ namespace SchoolService_Master.Controllers
 
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = geoHierarchy.id }, geoHierarchy);
+            return CreatedAtRoute("DefaultApi", new { id = geoHierarchy.Id }, geoHierarchy);
         }
 
         // DELETE: api/GeoHierarchies/5
