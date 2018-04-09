@@ -6,7 +6,7 @@ using System.Web;
 
 namespace SchoolService_Master.Models
 {
-    public class DbInitializer : DropCreateDatabaseAlways<SchoolServiceContext>
+    public class DbInitializer : DropCreateDatabaseIfModelChanges<SchoolServiceContext>
     {
         protected override void Seed(SchoolServiceContext context)
         {

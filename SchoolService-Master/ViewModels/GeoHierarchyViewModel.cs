@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using SchoolService_Master.Models;
 
 namespace SchoolService_Master.ViewModels
 {
@@ -22,5 +23,37 @@ namespace SchoolService_Master.ViewModels
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
         public List<SchoolGeoHierarchyMappingViewModel> SchoolGeoHierarchyMappingViewModels { get; set; }
+
+        public static implicit operator GeoHierarchyViewModel(GeoHierarchy geohierarchy)
+        {
+            return new GeoHierarchyViewModel
+            {
+                Id = geohierarchy.Id,
+                CountryId = geohierarchy.CountryId,
+                StateId = geohierarchy.StateId,
+                ZoneId = geohierarchy.ZoneId,
+                BranchId = geohierarchy.BranchId,
+                SupervisorId = geohierarchy.SupervisorId,
+                MarketingHierarchyUser = geohierarchy.MarketingHierarchyUser,
+                Created = DateTime.Now,
+                Updated = DateTime.Now
+            };
+        }
+
+        public static implicit operator GeoHierarchy(GeoHierarchyViewModel gvm)
+        {
+            return new GeoHierarchy
+            {
+                Id = gvm.Id,
+                CountryId = gvm.CountryId,
+                StateId = gvm.StateId,
+                ZoneId = gvm.ZoneId,
+                BranchId = gvm.BranchId,
+                SupervisorId = gvm.SupervisorId,
+                MarketingHierarchyUser = gvm.MarketingHierarchyUser,
+                Created = DateTime.Now,
+                Updated = DateTime.Now
+            };
+        }
     }
 }

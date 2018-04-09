@@ -42,47 +42,66 @@ namespace SchoolService_Master.Controllers
         }
 
         // GET: api/GeoHierarchies/5
-        [ResponseType(typeof(GeoHierarchy))]
+        [ResponseType(typeof(GeoHierarchyViewModel))]
         public async Task<IHttpActionResult> GetGeoHierarchy(int id)
         {
-            GeoHierarchy geoHierarchy = await db.GeoHierarchies.FindAsync(id);
+            GeoHierarchyViewModel geoHierarchy = await db.GeoHierarchies.FindAsync(id);
             if (geoHierarchy == null)
             {
                 return NotFound();
             }
+            List<SchoolGeoHierarchyMapping> schoolGeoHierarchyMapping = await db.SchoolGeoHierarchyMapping
+                                                                                .Where(x => x.GeoHierarchyId == id).ToListAsync();
+            geoHierarchy.SchoolGeoHierarchyMappingViewModels = schoolGeoHierarchyMapping
+                                                                .Select<SchoolGeoHierarchyMapping, SchoolGeoHierarchyMappingViewModel>(x => x).ToList();
+
 
             return Ok(geoHierarchy);
         }
 
         // PUT: api/GeoHierarchies/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutGeoHierarchy(int id, GeoHierarchy geoHierarchy)
+        public async Task<IHttpActionResult> PutGeoHierarchy(int id, GeoHierarchyViewModel geoHierarchyViewModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != geoHierarchy.Id)
+            if (id != geoHierarchyViewModel.Id)
             {
                 return BadRequest();
             }
-
-            db.Entry(geoHierarchy).State = EntityState.Modified;
-
-            try
+            using (var transaction = db.Database.BeginTransaction())
             {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!GeoHierarchyExists(id))
+                try
                 {
-                    return NotFound();
+                    GeoHierarchy geoHierarchy = geoHierarchyViewModel;
+                    db.Entry(geoHierarchy).State = EntityState.Modified;
+                    await db.SaveChangesAsync();
+                    List<SchoolGeoHierarchyMapping> lstSchoolGeoHierarchyMapping = db.SchoolGeoHierarchyMapping.Where(a => a.GeoHierarchyId == geoHierarchyViewModel.Id).ToList();
+                    db.SchoolGeoHierarchyMapping.RemoveRange(lstSchoolGeoHierarchyMapping);
+                    await db.SaveChangesAsync();
+                    lstSchoolGeoHierarchyMapping.Clear();
+                    foreach (SchoolGeoHierarchyMappingViewModel item in geoHierarchyViewModel.SchoolGeoHierarchyMappingViewModels)
+                    {
+                        lstSchoolGeoHierarchyMapping.Add(new SchoolGeoHierarchyMapping { SchoolId = item.Id, GeoHierarchyId = geoHierarchyViewModel.Id });
+                    }
+                    db.SchoolGeoHierarchyMapping.AddRange(lstSchoolGeoHierarchyMapping);
+                    await db.SaveChangesAsync();
+                    transaction.Commit();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    transaction.Rollback();
+                    if (!GeoHierarchyExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
             }
 
@@ -91,7 +110,7 @@ namespace SchoolService_Master.Controllers
 
         // POST: api/GeoHierarchies
         [ResponseType(typeof(GeoHierarchy))]
-        public async Task<IHttpActionResult> PostGeoHierarchy(GeoHierarchyViewModel geoHierarchy)
+        public async Task<IHttpActionResult> PostGeoHierarchy(GeoHierarchyViewModel geoHierarchyViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -101,24 +120,15 @@ namespace SchoolService_Master.Controllers
             {
                 try
                 {
-                    db.GeoHierarchies.Add(new GeoHierarchy
-                    {
-                        CountryId = geoHierarchy.CountryId,
-                        ZoneId = geoHierarchy.ZoneId,
-                        BranchId = geoHierarchy.BranchId,
-                        StateId = geoHierarchy.StateId,
-                        SupervisorId = geoHierarchy.SupervisorId,
-                        MarketingHierarchyUser = geoHierarchy.MarketingHierarchyUser,
-                        Created = DateTime.Now,
-                        Updated = DateTime.Now
-                    });
+                    GeoHierarchy geoHierarchy = geoHierarchyViewModel;
+                    db.GeoHierarchies.Add(geoHierarchy);
                     await db.SaveChangesAsync();
-                    List<SchoolGeoHierarchyMapping> schoolGeoHierarchyMapping = new List<SchoolGeoHierarchyMapping>();
-                    foreach (SchoolGeoHierarchyMappingViewModel item in geoHierarchy.SchoolGeoHierarchyMappingViewModels)
+                    List<SchoolGeoHierarchyMapping> lstSchoolGeoHierarchyMapping = new List<SchoolGeoHierarchyMapping>();
+                    foreach (SchoolGeoHierarchyMappingViewModel item in geoHierarchyViewModel.SchoolGeoHierarchyMappingViewModels)
                     {
-                        schoolGeoHierarchyMapping.Add(new SchoolGeoHierarchyMapping { SchoolId = item.id, GeoHierarchyId = geoHierarchy.Id });
+                        lstSchoolGeoHierarchyMapping.Add(new SchoolGeoHierarchyMapping { SchoolId = item.Id, GeoHierarchyId = geoHierarchy.Id });
                     }
-                    db.SchoolGeoHierarchyMapping.AddRange(schoolGeoHierarchyMapping);
+                    db.SchoolGeoHierarchyMapping.AddRange(lstSchoolGeoHierarchyMapping);
                     await db.SaveChangesAsync();
                     transaction.Commit();
                 }
@@ -130,7 +140,7 @@ namespace SchoolService_Master.Controllers
 
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = geoHierarchy.Id }, geoHierarchy);
+            return CreatedAtRoute("DefaultApi", new { id = geoHierarchyViewModel.Id }, geoHierarchyViewModel);
         }
 
         // DELETE: api/GeoHierarchies/5
