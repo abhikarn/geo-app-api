@@ -15,7 +15,7 @@ using SchoolService_Master.ViewModels;
 
 namespace SchoolService_Master.Controllers
 {
-    [EnableCors(origins: "http://localhost:7070", headers: "*", methods: "*")]
+    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     public class GeoHierarchiesController : ApiController
     {
         private SchoolServiceContext db = new SchoolServiceContext();

@@ -57,6 +57,15 @@ namespace SchoolService_Master.Models
             };
             context.Countries.AddRange(countries);
             context.SaveChanges();
+
+            List<Role> roles = new List<Role> {
+               new Role() { Name = "Super Admin", Description="Super Admin", IsActive=true },
+               new Role() { Name = "Admin", Description="Admin", IsActive=true},
+               new Role() { Name = "User", Description="Hierarchy user", IsActive=true }
+            };
+            context.Roles.AddRange(roles);
+            context.SaveChanges();
+
             base.Seed(context);
         }
     }

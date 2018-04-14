@@ -11,8 +11,8 @@ namespace SchoolService_Master
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
-            EnableCorsAttribute cors = new EnableCorsAttribute("http://localhost:7070", "*", "*");
-            
+            EnableCorsAttribute cors = new EnableCorsAttribute("http://localhost:4200", "*", "*");
+
             // Web API routes
             config.EnableCors(cors);
             config.MapHttpAttributeRoutes();

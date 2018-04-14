@@ -8,32 +8,35 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using SchoolService_Master.Models;
 using SchoolService_Master.ViewModels;
 
 namespace SchoolService_Master.Controllers
 {
+    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     public class SchoolMastersController : ApiController
     {
         private SchoolServiceContext db = new SchoolServiceContext();
 
         // GET: api/SchoolMasters
-        public IQueryable<SchoolMasterViewModel> GetSchools()
+        public IQueryable<SchoolMaster> GetSchools()
         {
-            var schools = from b in db.Schools
-                          select new SchoolMasterViewModel()
-                          {
-                              Id = b.Id,
-                              SchoolName = b.SchoolName,
-                              HouseNumber = b.HouseNumber,
-                              Streat = b.Streat,
-                              Area = b.Area,
-                              LGA = b.LGA,
-                              LandMark = b.LandMark
-                          };
+            //var schools = from b in db.Schools
+            //              select new SchoolMasterViewModel()
+            //              {
+            //                  Id = b.Id,
+            //                  SchoolName = b.SchoolName,
+            //                  HouseNumber = b.HouseNumber,
+            //                  Streat = b.Streat,
+            //                  Area = b.Area,
+            //                  LGA = b.LGA,
+            //                  LandMark = b.LandMark
+            //              };
 
-            return schools;
+            //return schools;
+            return db.Schools;
         }
 
         // GET: api/SchoolMasters/5
@@ -88,13 +91,23 @@ namespace SchoolService_Master.Controllers
         [ResponseType(typeof(SchoolMaster))]
         public async Task<IHttpActionResult> PostSchoolMaster(SchoolMaster schoolMaster)
         {
+            schoolMaster.Created = DateTime.Now;
+            schoolMaster.Updated = DateTime.Now;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Schools.Add(schoolMaster);
-            await db.SaveChangesAsync();
+            try
+            {
+                db.Schools.Add(schoolMaster);
+                await db.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
 
             return CreatedAtRoute("DefaultApi", new { id = schoolMaster.Id }, schoolMaster);
         }

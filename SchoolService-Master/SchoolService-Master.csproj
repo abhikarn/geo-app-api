@@ -158,6 +158,7 @@
     <Compile Include="Controllers\SchoolMastersController.cs" />
     <Compile Include="Controllers\StateMastersController.cs" />
     <Compile Include="Controllers\SupervisorMastersController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ZoneMastersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -166,12 +167,14 @@
     <Compile Include="Models\Branch.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\GeoHierarchy.cs" />
+    <Compile Include="Models\Role.cs" />
     <Compile Include="Models\SchoolGeoHierarchyMapping.cs" />
     <Compile Include="Models\SchoolServiceContext.cs" />
     <Compile Include="Models\DbInitializer.cs" />
     <Compile Include="Models\School.cs" />
     <Compile Include="Models\State.cs" />
     <Compile Include="Models\Supervisor.cs" />
+    <Compile Include="Models\Users.cs" />
     <Compile Include="Models\Zone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\BranchViewModel.cs" />
@@ -181,6 +184,7 @@
     <Compile Include="ViewModels\SchoolViewModel.cs" />
     <Compile Include="ViewModels\StateViewModel.cs" />
     <Compile Include="ViewModels\SupervisorViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\ZoneViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

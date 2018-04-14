@@ -21,5 +21,8 @@ namespace SchoolService_Master.Models
         public virtual DbSet<CountryMaster> Countries { get; set; }
         public virtual DbSet<GeoHierarchy> GeoHierarchies { get; set; }
         public virtual DbSet<SchoolGeoHierarchyMapping> SchoolGeoHierarchyMapping { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
+
     }
 }
