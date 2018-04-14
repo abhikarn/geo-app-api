@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Serialization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -15,6 +16,8 @@ namespace SchoolService_Master
 
             // Web API routes
             config.EnableCors(cors);
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver =
+                new CamelCasePropertyNamesContractResolver();
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
