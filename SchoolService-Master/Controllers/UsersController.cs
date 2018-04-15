@@ -8,11 +8,13 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using SchoolService_Master.Models;
 
 namespace SchoolService_Master.Controllers
 {
+    [EnableCors(origins: "http://localhost:6060", headers: "*", methods: "*")]
     public class UsersController : ApiController
     {
         private SchoolServiceContext db = new SchoolServiceContext();

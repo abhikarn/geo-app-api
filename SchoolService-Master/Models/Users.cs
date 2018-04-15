@@ -72,6 +72,7 @@ namespace SchoolService_Master.Models
         /// </summary>
         public int CountryId { get; set; }
         public int StateId { get; set; }
+        public int CityId { get; set; }
         public int ZoneId { get; set; }
         public int BranchId { get; set; }
     }

@@ -66,6 +66,14 @@ namespace SchoolService_Master.Models
             context.Roles.AddRange(roles);
             context.SaveChanges();
 
+            List<CityMaster> city = new List<CityMaster> {
+               new CityMaster() { CityName = "Madrid", Created=DateTime.Now, Updated=DateTime.Now },
+               new CityMaster() { CityName = "Istambul", Created=DateTime.Now, Updated=DateTime.Now},
+               new CityMaster() { CityName = "Edinburgh", Created=DateTime.Now, Updated=DateTime.Now }
+            };
+            context.City.AddRange(city);
+            context.SaveChanges();
+
             base.Seed(context);
         }
     }
