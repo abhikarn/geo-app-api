@@ -37,9 +37,7 @@ namespace SchoolService_Master.Controllers
             return Ok(users);
         }
 
-        // PUT: api/Users/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutUsers(int id, Users users)
+        public IHttpActionResult PutUsers(int id, Users users)
         {
             if (!ModelState.IsValid)
             {
@@ -55,7 +53,7 @@ namespace SchoolService_Master.Controllers
 
             try
             {
-                await db.SaveChangesAsync();
+                db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -74,11 +72,16 @@ namespace SchoolService_Master.Controllers
 
         // POST: api/Users
         [ResponseType(typeof(Users))]
-        public async Task<IHttpActionResult> PostUsers(Users users)
+        public async Task<IHttpActionResult> PostUsers(Users users, int id = 0)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+
+            if (id > 0)
+            {
+                return PutUsers(id, users);
             }
 
             db.Users.Add(users);

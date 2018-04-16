@@ -15,7 +15,6 @@ using SchoolService_Master.ViewModels;
 
 namespace SchoolService_Master.Controllers
 {
-    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     public class GeoHierarchiesController : ApiController
     {
         private SchoolServiceContext db = new SchoolServiceContext();
@@ -59,9 +58,7 @@ namespace SchoolService_Master.Controllers
             return Ok(geoHierarchy);
         }
 
-        // PUT: api/GeoHierarchies/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutGeoHierarchy(int id, GeoHierarchyViewModel geoHierarchyViewModel)
+        public IHttpActionResult PutGeoHierarchy(int id, GeoHierarchyViewModel geoHierarchyViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -78,17 +75,17 @@ namespace SchoolService_Master.Controllers
                 {
                     GeoHierarchy geoHierarchy = geoHierarchyViewModel;
                     db.Entry(geoHierarchy).State = EntityState.Modified;
-                    await db.SaveChangesAsync();
+                    db.SaveChanges();
                     List<SchoolGeoHierarchyMapping> lstSchoolGeoHierarchyMapping = db.SchoolGeoHierarchyMapping.Where(a => a.GeoHierarchyId == geoHierarchyViewModel.Id).ToList();
                     db.SchoolGeoHierarchyMapping.RemoveRange(lstSchoolGeoHierarchyMapping);
-                    await db.SaveChangesAsync();
+                    db.SaveChanges();
                     lstSchoolGeoHierarchyMapping.Clear();
                     foreach (SchoolGeoHierarchyMappingViewModel item in geoHierarchyViewModel.SchoolGeoHierarchyMappingViewModels)
                     {
                         lstSchoolGeoHierarchyMapping.Add(new SchoolGeoHierarchyMapping { SchoolId = item.Id, GeoHierarchyId = geoHierarchyViewModel.Id });
                     }
                     db.SchoolGeoHierarchyMapping.AddRange(lstSchoolGeoHierarchyMapping);
-                    await db.SaveChangesAsync();
+                    db.SaveChanges();
                     transaction.Commit();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -110,11 +107,15 @@ namespace SchoolService_Master.Controllers
 
         // POST: api/GeoHierarchies
         [ResponseType(typeof(GeoHierarchy))]
-        public async Task<IHttpActionResult> PostGeoHierarchy(GeoHierarchyViewModel geoHierarchyViewModel)
+        public async Task<IHttpActionResult> PostGeoHierarchy(GeoHierarchyViewModel geoHierarchyViewModel, int id = 0)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+            if (id > 0)
+            {
+                return PutGeoHierarchy(id, geoHierarchyViewModel);
             }
             using (var transaction = db.Database.BeginTransaction())
             {
