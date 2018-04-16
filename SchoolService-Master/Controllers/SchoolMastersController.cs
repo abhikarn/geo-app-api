@@ -15,7 +15,6 @@ using SchoolService_Master.ViewModels;
 
 namespace SchoolService_Master.Controllers
 {
-    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
     public class SchoolMastersController : ApiController
     {
         private SchoolServiceContext db = new SchoolServiceContext();
