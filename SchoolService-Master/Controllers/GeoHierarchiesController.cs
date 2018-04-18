@@ -137,7 +137,7 @@ namespace SchoolService_Master.Controllers
                 catch (Exception ex)
                 {
                     transaction.Rollback();
-                    throw;
+                    throw ex;
                 }
 
             }
