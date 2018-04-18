@@ -15,7 +15,7 @@ namespace SchoolService_Master.Controllers
     public class LoginController : ApiController
     {
         private SchoolServiceContext db = new SchoolServiceContext();
-        // GET: webapi/Login
+        // GET: webapi/Login comment
         [ResponseType(typeof(UserViewModel)), AllowAnonymous]
         public IHttpActionResult Login(UserViewModel userViewModel)
         {
