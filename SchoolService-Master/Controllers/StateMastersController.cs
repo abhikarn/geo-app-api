@@ -25,7 +25,7 @@ namespace SchoolService_Master.Controllers
                             select new StateMasterViewModel()
                             {
                                 Id = b.Id,
-                                StateName = b.StateName
+                                Name = b.StateName
                             };
 
             return states;

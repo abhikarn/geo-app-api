@@ -155,6 +155,7 @@
     <Compile Include="Controllers\CountryMastersController.cs" />
     <Compile Include="Controllers\GeoHierarchiesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MastersController.cs" />
     <Compile Include="Controllers\SchoolMastersController.cs" />
     <Compile Include="Controllers\StateMastersController.cs" />
     <Compile Include="Controllers\SupervisorMastersController.cs" />
@@ -179,9 +180,13 @@
     <Compile Include="Models\Zone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\BranchViewModel.cs" />
+    <Compile Include="ViewModels\CityViewModel.cs" />
     <Compile Include="ViewModels\CountryViewModel.cs" />
     <Compile Include="ViewModels\GeoHierarchyViewModel.cs" />
+    <Compile Include="ViewModels\Masters.cs" />
+    <Compile Include="ViewModels\RoleMasterViewModel.cs" />
     <Compile Include="ViewModels\SchoolGeoHierarchyMappingViewModel.cs" />
+    <Compile Include="ViewModels\SchoolMasterMultiSelect.cs" />
     <Compile Include="ViewModels\SchoolViewModel.cs" />
     <Compile Include="ViewModels\StateViewModel.cs" />
     <Compile Include="ViewModels\SupervisorViewModel.cs" />

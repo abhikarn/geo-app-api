@@ -25,7 +25,7 @@ namespace SchoolService_Master.Controllers
                          select new BranchMasterViewModel()
                          {
                              Id = b.Id,
-                             BranchName = b.BranchName
+                             Name = b.BranchName
                          };
 
             return branches;

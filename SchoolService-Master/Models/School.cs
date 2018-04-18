@@ -13,7 +13,7 @@ namespace SchoolService_Master.Models
         public int Id { get; set; }
         public string SchoolName { get; set; }
         public string HouseNumber { get; set; }
-        public string Streat { get; set; }
+        public string Street { get; set; }
         public string Area { get; set; }
         public string LGA { get; set; }
         public int CityId { get; set; }

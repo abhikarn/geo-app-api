@@ -11,6 +11,7 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using SchoolService_Master.Models;
+using SchoolService_Master.ViewModels;
 
 namespace SchoolService_Master.Controllers
 {
@@ -19,9 +20,34 @@ namespace SchoolService_Master.Controllers
         private SchoolServiceContext db = new SchoolServiceContext();
 
         // GET: api/Users
-        public IQueryable<Users> GetUsers()
+        public IQueryable<UserViewModel> GetUsers()
         {
-            return db.Users;
+            var users = from user in db.Users
+                        join role in db.Roles on user.RoleId equals role.Id
+                        join country in db.Countries on user.CountryId equals country.Id
+                        join state in db.States on user.StateId equals state.Id
+                        join city in db.City on user.CityId equals city.Id
+                        select new UserViewModel
+                        {
+                            UserMasterId = user.Id,
+                            UserName = user.UserName,
+                            EmailId = user.EmailId,
+                            UserPassword = user.UserPassword,
+                            IsActive = user.IsActive,
+                            LastLoginDate = user.LastLoginDate,
+                            FirstName = user.FirstName,
+                            LastName = user.LastName,
+                            RoleId = user.RoleId,
+                            RoleName = role.Name,
+                            Status = user.Status,
+                            CountryId = user.CountryId,
+                            CountryName = country.CountryrName,
+                            StateId = user.StateId,
+                            StateName = state.StateName,
+                            CityId = user.CityId,
+                            CityName = city.CityName
+                        };
+            return users;
         }
 
         // GET: api/Users/5
@@ -37,16 +63,11 @@ namespace SchoolService_Master.Controllers
             return Ok(users);
         }
 
-        public IHttpActionResult PutUsers(int id, Users users)
+        public IHttpActionResult PutUsers(Users users)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
-
-            if (id != users.Id)
-            {
-                return BadRequest();
             }
 
             db.Entry(users).State = EntityState.Modified;
@@ -57,7 +78,7 @@ namespace SchoolService_Master.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UsersExists(id))
+                if (!UsersExists(users.Id))
                 {
                     return NotFound();
                 }
@@ -71,23 +92,24 @@ namespace SchoolService_Master.Controllers
         }
 
         // POST: api/Users
-        [ResponseType(typeof(Users))]
-        public async Task<IHttpActionResult> PostUsers(Users users, int id = 0)
+        [ResponseType(typeof(UserViewModel))]
+        public async Task<IHttpActionResult> PostUsers(UserViewModel userViewModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id > 0)
+            Users user = userViewModel;
+            if (userViewModel.UserMasterId > 0)
             {
-                return PutUsers(id, users);
+                return PutUsers(user);
             }
 
-            db.Users.Add(users);
+            db.Users.Add(user);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = users.Id }, users);
+            return CreatedAtRoute("DefaultApi", new { id = user.Id }, user);
         }
 
         // DELETE: api/Users/5

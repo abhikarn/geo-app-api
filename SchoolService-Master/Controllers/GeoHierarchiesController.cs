@@ -30,9 +30,14 @@ namespace SchoolService_Master.Controllers
                                  join SUP in db.Supervisors on GH.SupervisorId equals SUP.Id
                                  select new GeoHierarchyViewModel
                                  {
+                                     Id = GH.Id,
+                                     CountryId = GH.CountryId,
                                      CountryName = COU.CountryrName,
+                                     StateId = GH.StateId,
                                      StateName = STA.StateName,
+                                     ZoneId = GH.ZoneId,
                                      ZoneName = ZON.ZoneName,
+                                     BranchId = GH.BranchId,
                                      BranchName = BRA.BranchName,
                                      SupervisorName = SUP.SupervisorName,
                                      MarketingHierarchyUser = GH.MarketingHierarchyUser,
@@ -58,17 +63,13 @@ namespace SchoolService_Master.Controllers
             return Ok(geoHierarchy);
         }
 
-        public IHttpActionResult PutGeoHierarchy(int id, GeoHierarchyViewModel geoHierarchyViewModel)
+        public IHttpActionResult PutGeoHierarchy(GeoHierarchyViewModel geoHierarchyViewModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != geoHierarchyViewModel.Id)
-            {
-                return BadRequest();
-            }
             using (var transaction = db.Database.BeginTransaction())
             {
                 try
@@ -91,7 +92,7 @@ namespace SchoolService_Master.Controllers
                 catch (DbUpdateConcurrencyException)
                 {
                     transaction.Rollback();
-                    if (!GeoHierarchyExists(id))
+                    if (!GeoHierarchyExists(geoHierarchyViewModel.Id))
                     {
                         return NotFound();
                     }
@@ -107,15 +108,15 @@ namespace SchoolService_Master.Controllers
 
         // POST: api/GeoHierarchies
         [ResponseType(typeof(GeoHierarchy))]
-        public async Task<IHttpActionResult> PostGeoHierarchy(GeoHierarchyViewModel geoHierarchyViewModel, int id = 0)
+        public async Task<IHttpActionResult> PostGeoHierarchy(GeoHierarchyViewModel geoHierarchyViewModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            if (id > 0)
+            if (geoHierarchyViewModel.Id > 0)
             {
-                return PutGeoHierarchy(id, geoHierarchyViewModel);
+                return PutGeoHierarchy(geoHierarchyViewModel);
             }
             using (var transaction = db.Database.BeginTransaction())
             {

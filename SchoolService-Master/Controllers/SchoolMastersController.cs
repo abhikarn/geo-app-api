@@ -51,16 +51,11 @@ namespace SchoolService_Master.Controllers
             return Ok(schoolMaster);
         }
 
-        public IHttpActionResult PutSchoolMaster(int id, SchoolMaster schoolMaster)
+        public IHttpActionResult PutSchoolMaster(SchoolMaster schoolMaster)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
-
-            if (id != schoolMaster.Id)
-            {
-                return BadRequest();
             }
 
             db.Entry(schoolMaster).State = EntityState.Modified;
@@ -71,7 +66,7 @@ namespace SchoolService_Master.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SchoolMasterExists(id))
+                if (!SchoolMasterExists(schoolMaster.Id))
                 {
                     return NotFound();
                 }
@@ -86,7 +81,7 @@ namespace SchoolService_Master.Controllers
 
         // POST: api/SchoolMasters
         [ResponseType(typeof(SchoolMaster))]
-        public async Task<IHttpActionResult> PostSchoolMaster(SchoolMaster schoolMaster, int id = 0)
+        public async Task<IHttpActionResult> PostSchoolMaster(SchoolMaster schoolMaster)
         {
             schoolMaster.Created = DateTime.Now;
             schoolMaster.Updated = DateTime.Now;
@@ -95,9 +90,9 @@ namespace SchoolService_Master.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id > 0)
+            if (schoolMaster.Id > 0)
             {
-                return PutSchoolMaster(id, schoolMaster);
+                return PutSchoolMaster(schoolMaster);
             }
             try
             {

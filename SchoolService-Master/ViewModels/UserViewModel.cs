@@ -2,66 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using SchoolService_Master.Models;
 
 namespace SchoolService_Master.ViewModels
 {
     public class UserViewModel
     {
-        //[Column("UserId")]
-        public int Id { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
+        public int UserMasterId { get; set; }
         public string UserName { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        //[Column(TypeName = "VARCHAR")]
         public string EmailId { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
         public string UserPassword { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
         public bool IsActive { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public Nullable<System.DateTime> LastLoginDate { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
+        public DateTime? LastLoginDate { get; set; }
         public string FirstName { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
         public string LastName { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string MiddleName { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public Nullable<int> Gender { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
         public int RoleId { get; set; }
         public string RoleName { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
         public string Status { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
         public int CountryId { get; set; }
         public string CountryName { get; set; }
         public int StateId { get; set; }
@@ -72,5 +29,39 @@ namespace SchoolService_Master.ViewModels
         public string ZoneName { get; set; }
         public int BranchId { get; set; }
         public string BranchName { get; set; }
+
+        public static implicit operator UserViewModel(Users user)
+        {
+            return new UserViewModel
+            {
+                UserMasterId = user.Id,
+                UserName = user.UserName,
+                UserPassword = user.UserPassword,
+                EmailId = user.EmailId,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                CityId = user.CityId,
+                StateId = user.StateId,
+                CountryId = user.CountryId,
+                RoleId = user.RoleId,
+            };
+        }
+
+        public static implicit operator Users(UserViewModel userViewModel)
+        {
+            return new Users
+            {
+                Id = userViewModel.UserMasterId,
+                UserName = userViewModel.UserName,
+                UserPassword = userViewModel.UserPassword,
+                EmailId = userViewModel.EmailId,
+                FirstName = userViewModel.FirstName,
+                LastName = userViewModel.LastName,
+                CityId = userViewModel.CityId,
+                StateId = userViewModel.StateId,
+                CountryId = userViewModel.CountryId,
+                RoleId = userViewModel.RoleId,
+            };
+        }
     }
 }

@@ -25,7 +25,7 @@ namespace SchoolService_Master.Controllers
                            select new ZoneMasterViewModel()
                            {
                                Id = b.Id,
-                               ZoneName = b.ZoneName
+                               Name = b.ZoneName
                            };
 
             return zones;

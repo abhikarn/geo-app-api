@@ -11,9 +11,9 @@ namespace SchoolService_Master.Models
         protected override void Seed(SchoolServiceContext context)
         {
             List<SchoolMaster> Schools = new List<SchoolMaster> {
-               new SchoolMaster() { SchoolName = "DAV", HouseNumber = "12", Streat = "test", Area = "Test", LGA = "Test", Created=DateTime.Now, Updated=DateTime.Now },
-               new SchoolMaster() { SchoolName = "DPS", HouseNumber = "187", Streat = "test2", Area = "Test2", LGA = "Test2", Created=DateTime.Now, Updated=DateTime.Now },
-               new SchoolMaster() { SchoolName = "StJohns", HouseNumber = "123", Streat = "test1", Area = "Test1", LGA = "Test1", Created=DateTime.Now, Updated=DateTime.Now }
+               new SchoolMaster() { SchoolName = "DAV", HouseNumber = "12", Street = "test", Area = "Test", LGA = "Test", Created=DateTime.Now, Updated=DateTime.Now },
+               new SchoolMaster() { SchoolName = "DPS", HouseNumber = "187", Street = "test2", Area = "Test2", LGA = "Test2", Created=DateTime.Now, Updated=DateTime.Now },
+               new SchoolMaster() { SchoolName = "StJohns", HouseNumber = "123", Street = "test1", Area = "Test1", LGA = "Test1", Created=DateTime.Now, Updated=DateTime.Now }
             };
             context.Schools.AddRange(Schools);
             context.SaveChanges();
@@ -59,9 +59,9 @@ namespace SchoolService_Master.Models
             context.SaveChanges();
 
             List<Role> roles = new List<Role> {
-               new Role() { Name = "Super Admin", Description="Super Admin", IsActive=true },
-               new Role() { Name = "Admin", Description="Admin", IsActive=true},
-               new Role() { Name = "User", Description="Hierarchy user", IsActive=true }
+               new Role() { Name = "Admin", Description="Admin", IsActive=true },
+               new Role() { Name = "Supervisor", Description="Supervisor", IsActive=true},
+               new Role() { Name = "Marketing User", Description="Hierarchy user", IsActive=true }
             };
             context.Roles.AddRange(roles);
             context.SaveChanges();
