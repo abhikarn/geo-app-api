@@ -10,6 +10,14 @@ namespace SchoolService_Master.Models
     {
         protected override void Seed(SchoolServiceContext context)
         {
+
+            List<Users> users = new List<Users> {
+               new Users() { UserName = "abhi", UserPassword = "123", EmailId = "abhi.karn@gmail.com", FirstName = "Abhishek", LastName = "Karn", RoleId=1, CountryId=1, StateId=1, CityId=1, IsActive=true},
+            };
+            context.Users.AddRange(users);
+            context.SaveChanges();
+
+
             List<SchoolMaster> Schools = new List<SchoolMaster> {
                new SchoolMaster() { SchoolName = "DAV", HouseNumber = "12", Street = "test", Area = "Test", LGA = "Test", Created=DateTime.Now, Updated=DateTime.Now },
                new SchoolMaster() { SchoolName = "DPS", HouseNumber = "187", Street = "test2", Area = "Test2", LGA = "Test2", Created=DateTime.Now, Updated=DateTime.Now },
