@@ -19,8 +19,9 @@ namespace SchoolService_Master.Controllers
         [ResponseType(typeof(UserViewModel)), AllowAnonymous]
         public IHttpActionResult Login(UserViewModel userViewModel)
         {
-            Users users = db.Users.Where(x => x.UserName == userViewModel.UserName.Trim() && x.UserPassword == userViewModel.UserPassword.Trim()).FirstOrDefault();
-            if (users == null)
+            //Users users = db.Users.Where(x => x.UserName == userViewModel.UserName.Trim() && x.UserPassword == userViewModel.UserPassword.Trim()).FirstOrDefault();
+            var user = (new UsersController().GetUsers().Where(x => x.UserName == userViewModel.UserName.Trim() && x.UserPassword == userViewModel.UserPassword.Trim()).FirstOrDefault());
+            if (user == null)
             {
                 return NotFound();
             }
@@ -29,9 +30,8 @@ namespace SchoolService_Master.Controllers
                                                                    FormsAuthentication.FormsCookiePath);
             // Encrypt the ticket
             var encriptedTicket = FormsAuthentication.Encrypt(ticket);
-            userViewModel = users;
-            userViewModel.authToken = encriptedTicket;
-            return Ok(userViewModel);
+            user.authToken = encriptedTicket;
+            return Ok(user);
         }
     }
 }
