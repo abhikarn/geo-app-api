@@ -13,7 +13,7 @@ namespace SchoolService_Master.Controllers
     {
         private SchoolServiceContext db = new SchoolServiceContext();
         // GET: webapi/Masters
-        public Masters GetMasters()
+        public Masters GetMasters(int countryId, int stateId, int cityId)
         {
             Masters masters = new Masters();
             List<CountryMaster> countryMaster = db.Countries.ToList();
@@ -23,7 +23,8 @@ namespace SchoolService_Master.Controllers
             List<SupervisorMaster> supervisorMaster = db.Supervisors.ToList();
             List<CityMaster> cityMaster = db.City.ToList();
             List<Role> role = db.Roles.ToList();
-            List<SchoolMaster> LstShoolMaster = db.Schools.ToList();
+            //List<SchoolMaster> LstShoolMaster = db.Schools.ToList();
+            List<SchoolMaster> LstShoolMaster = (new SchoolMastersController().GetSchools(countryId, stateId, cityId)).ToList();
             masters.CountryMaster = countryMaster.Select<CountryMaster, CountryMasterViewModel>(x => x).ToList();
             masters.ZoneMaster = zoneMaster.Select<ZoneMaster, ZoneMasterViewModel>(x => x).ToList();
             masters.BranchMaster = branchMaster.Select<BranchMaster, BranchMasterViewModel>(x => x).ToList();

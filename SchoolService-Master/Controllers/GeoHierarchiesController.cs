@@ -39,6 +39,7 @@ namespace SchoolService_Master.Controllers
                                      ZoneName = ZON.ZoneName,
                                      BranchId = GH.BranchId,
                                      BranchName = BRA.BranchName,
+                                     SupervisorId = GH.SupervisorId,
                                      SupervisorName = SUP.SupervisorName,
                                      MarketingHierarchyUser = GH.MarketingHierarchyUser,
                                  };

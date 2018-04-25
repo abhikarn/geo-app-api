@@ -19,9 +19,9 @@ namespace SchoolService_Master.Models
 
 
             List<SchoolMaster> Schools = new List<SchoolMaster> {
-               new SchoolMaster() { SchoolName = "DAV", HouseNumber = "12", Street = "test", Area = "Test", LGA = "Test", Created=DateTime.Now, Updated=DateTime.Now },
-               new SchoolMaster() { SchoolName = "DPS", HouseNumber = "187", Street = "test2", Area = "Test2", LGA = "Test2", Created=DateTime.Now, Updated=DateTime.Now },
-               new SchoolMaster() { SchoolName = "StJohns", HouseNumber = "123", Street = "test1", Area = "Test1", LGA = "Test1", Created=DateTime.Now, Updated=DateTime.Now }
+               new SchoolMaster() { SchoolName = "DAV", HouseNumber = "12", Street = "test", Area = "Test", LGA = "Test", CityId=1, StateId=1, CountryId=1, Created=DateTime.Now, Updated=DateTime.Now },
+               new SchoolMaster() { SchoolName = "DPS", HouseNumber = "187", Street = "test2", Area = "Test2", LGA = "Test2", CityId=2, StateId=2, CountryId=2, Created=DateTime.Now, Updated=DateTime.Now },
+               new SchoolMaster() { SchoolName = "StJohns", HouseNumber = "123", Street = "test1", Area = "Test1", LGA = "Test1", CityId=3, StateId=3, CountryId=3, Created=DateTime.Now, Updated=DateTime.Now }
             };
             context.Schools.AddRange(Schools);
             context.SaveChanges();

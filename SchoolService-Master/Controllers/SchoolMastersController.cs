@@ -20,8 +20,9 @@ namespace SchoolService_Master.Controllers
         private SchoolServiceContext db = new SchoolServiceContext();
 
         // GET: api/SchoolMasters
-        public IQueryable<SchoolMaster> GetSchools()
+        public IQueryable<SchoolMaster> GetSchools(int countryId, int stateId, int cityId)
         {
+            IQueryable<SchoolMaster> schools;
             //var schools = from b in db.Schools
             //              select new SchoolMasterViewModel()
             //              {
@@ -35,7 +36,14 @@ namespace SchoolService_Master.Controllers
             //              };
 
             //return schools;
-            return db.Schools;
+            schools = db.Schools;
+            if (countryId > 0)
+                schools = schools.Where(x => x.CountryId == countryId);
+            if (stateId > 0)
+                schools = schools.Where(x => x.StateId == stateId);
+            if (cityId > 0)
+                schools = schools.Where(x => x.CityId == cityId);
+            return schools;
         }
 
         // GET: api/SchoolMasters/5
