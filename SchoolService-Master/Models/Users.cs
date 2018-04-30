@@ -7,7 +7,7 @@ using System.Web;
 
 namespace SchoolService_Master.Models
 {
-    public class Users
+    public class Users 
     {
 
         /// <summary>

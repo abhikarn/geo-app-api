@@ -25,12 +25,12 @@ namespace SchoolService_Master.Controllers
             {
                 return NotFound();
             }
-            var ticket = new FormsAuthenticationTicket(1, userViewModel.UserName, DateTime.Now,
-                                                                   DateTime.Now.AddMinutes(60), true, "",
-                                                                   FormsAuthentication.FormsCookiePath);
-            // Encrypt the ticket
-            var encriptedTicket = FormsAuthentication.Encrypt(ticket);
-            user.authToken = encriptedTicket;
+            //var ticket = new FormsAuthenticationTicket(1, userViewModel.UserName, DateTime.Now,
+            //                                                       DateTime.Now.AddMinutes(60), true, "",
+            //                                                       FormsAuthentication.FormsCookiePath);
+            //// Encrypt the ticket
+            //var encriptedTicket = FormsAuthentication.Encrypt(ticket);
+            //user.authToken = encriptedTicket;
             return Ok(user);
         }
     }

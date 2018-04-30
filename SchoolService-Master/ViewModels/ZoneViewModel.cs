@@ -10,6 +10,8 @@ namespace SchoolService_Master.ViewModels
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int CountryId { get; set; }
+        public string CountryName { get; set; }
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
 
@@ -18,7 +20,8 @@ namespace SchoolService_Master.ViewModels
             return new ZoneMasterViewModel
             {
                 Id = zoneMaster.Id,
-                Name = zoneMaster.ZoneName
+                Name = zoneMaster.ZoneName,
+                CountryId = zoneMaster.CountryId
             };
         }
 
@@ -27,7 +30,8 @@ namespace SchoolService_Master.ViewModels
             return new ZoneMaster
             {
                 Id = zoneMasterViewModel.Id,
-                ZoneName = zoneMasterViewModel.Name
+                ZoneName = zoneMasterViewModel.Name,
+                CountryId = zoneMasterViewModel.CountryId
             };
         }
     }

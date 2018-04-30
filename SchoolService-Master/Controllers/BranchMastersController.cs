@@ -19,14 +19,18 @@ namespace SchoolService_Master.Controllers
         private SchoolServiceContext db = new SchoolServiceContext();
 
         // GET: api/BranchMasters
-        public IQueryable<BranchMasterViewModel> GetBranches()
+        public IQueryable<BranchMasterViewModel> GetBranches(int zoneId)
         {
             var branches = from b in db.Branches
-                         select new BranchMasterViewModel()
-                         {
-                             Id = b.Id,
-                             Name = b.BranchName
-                         };
+                           join z in db.Zones on b.ZoneId equals z.Id
+                           where b.ZoneId == zoneId
+                           select new BranchMasterViewModel()
+                           {
+                               Id = b.Id,
+                               Name = b.BranchName,
+                               ZoneId = b.ZoneId,
+                               ZoneName = z.ZoneName
+                           };
 
             return branches;
         }

@@ -16,6 +16,8 @@ namespace SchoolService_Master.ViewModels
         public string LGA { get; set; }
         public int CityId { get; set; }
         public int StateId { get; set; }
+        public int ZoneId { get; set; }
+        public int BranchId { get; set; }
         public int CountryId { get; set; }
         public string LandMark { get; set; }
         public string GeoCoordinate { get; set; }

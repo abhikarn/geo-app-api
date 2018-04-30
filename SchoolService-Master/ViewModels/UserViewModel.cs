@@ -8,7 +8,7 @@ namespace SchoolService_Master.ViewModels
 {
     public class UserViewModel
     {
-        public int UserMasterId { get; set; }
+        public int Id { get; set; }
         public string UserName { get; set; }
         public string EmailId { get; set; }
         public string UserPassword { get; set; }
@@ -16,6 +16,7 @@ namespace SchoolService_Master.ViewModels
         public DateTime? LastLoginDate { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string Name { get; set; }
         public int RoleId { get; set; }
         public string RoleName { get; set; }
         public string Status { get; set; }
@@ -35,7 +36,7 @@ namespace SchoolService_Master.ViewModels
         {
             return new UserViewModel
             {
-                UserMasterId = user.Id,
+                Id = user.Id,
                 UserName = user.UserName,
                 UserPassword = user.UserPassword,
                 EmailId = user.EmailId,
@@ -52,7 +53,7 @@ namespace SchoolService_Master.ViewModels
         {
             return new Users
             {
-                Id = userViewModel.UserMasterId,
+                Id = userViewModel.Id,
                 UserName = userViewModel.UserName,
                 UserPassword = userViewModel.UserPassword,
                 EmailId = userViewModel.EmailId,

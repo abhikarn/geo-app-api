@@ -15,6 +15,7 @@ using SchoolService_Master.ViewModels;
 
 namespace SchoolService_Master.Controllers
 {
+    [Authorize]
     public class UsersController : ApiController
     {
         private SchoolServiceContext db = new SchoolServiceContext();
@@ -26,10 +27,10 @@ namespace SchoolService_Master.Controllers
                         join role in db.Roles on user.RoleId equals role.Id
                         join country in db.Countries on user.CountryId equals country.Id
                         join state in db.States on user.StateId equals state.Id
-                        join city in db.City on user.CityId equals city.Id
+                        //join city in db.City on user.CityId equals city.Id
                         select new UserViewModel
                         {
-                            UserMasterId = user.Id,
+                            Id = user.Id,
                             UserName = user.UserName,
                             EmailId = user.EmailId,
                             UserPassword = user.UserPassword,
@@ -37,6 +38,7 @@ namespace SchoolService_Master.Controllers
                             LastLoginDate = user.LastLoginDate,
                             FirstName = user.FirstName,
                             LastName = user.LastName,
+                            Name = user.FirstName + " " + user.LastName,
                             RoleId = user.RoleId,
                             RoleName = role.Name,
                             Status = user.Status,
@@ -44,17 +46,44 @@ namespace SchoolService_Master.Controllers
                             CountryName = country.CountryrName,
                             StateId = user.StateId,
                             StateName = state.StateName,
-                            CityId = user.CityId,
-                            CityName = city.CityName
+                            //CityId = user.CityId,
+                            //CityName = city.CityName
                         };
             return users;
         }
 
         // GET: api/Users/5
-        [ResponseType(typeof(Users))]
-        public async Task<IHttpActionResult> GetUsers(int id)
+        [ResponseType(typeof(UserViewModel))]
+        public IHttpActionResult GetRoleBasedUser(int countryId, int stateId, string role)
         {
-            Users users = await db.Users.FindAsync(id);
+            var users = from user in db.Users
+                        join roles in db.Roles on user.RoleId equals roles.Id
+                        join country in db.Countries on user.CountryId equals country.Id
+                        join state in db.States on user.StateId equals state.Id
+                        where roles.Name == role
+                        select new UserViewModel
+                        {
+                            Id = user.Id,
+                            UserName = user.UserName,
+                            EmailId = user.EmailId,
+                            UserPassword = user.UserPassword,
+                            IsActive = user.IsActive,
+                            LastLoginDate = user.LastLoginDate,
+                            FirstName = user.FirstName,
+                            LastName = user.LastName,
+                            Name = user.FirstName + " " + user.LastName,
+                            RoleId = user.RoleId,
+                            RoleName = roles.Name,
+                            Status = user.Status,
+                            CountryId = user.CountryId,
+                            CountryName = country.CountryrName,
+                            StateId = user.StateId,
+                            StateName = state.StateName
+                        };
+            if (countryId > 0)
+                users = users.Where(x => x.CountryId == countryId);
+            if (stateId > 0)
+                users = users.Where(x => x.StateId == stateId);
             if (users == null)
             {
                 return NotFound();
@@ -100,8 +129,47 @@ namespace SchoolService_Master.Controllers
                 return BadRequest(ModelState);
             }
 
-            Users user = userViewModel;
-            if (userViewModel.UserMasterId > 0)
+            var users = from state in db.States
+                        join branch in db.Branches on state.BranchId equals branch.Id
+                        join zone in db.Zones on branch.ZoneId equals zone.Id
+                        join country in db.Countries on zone.CountryId equals country.Id
+                        where state.Id == userViewModel.StateId
+                        select new UserViewModel
+                        {
+                            Id = userViewModel.Id,
+                            UserName = userViewModel.UserName,
+                            EmailId = userViewModel.EmailId,
+                            UserPassword = userViewModel.UserPassword,
+                            IsActive = userViewModel.IsActive,
+                            LastLoginDate = userViewModel.LastLoginDate,
+                            FirstName = userViewModel.FirstName,
+                            LastName = userViewModel.LastName,
+                            RoleId = userViewModel.RoleId,
+                            Status = userViewModel.Status,
+                            CountryId = country.Id,
+                            ZoneId = zone.Id,
+                            BranchId = branch.Id,
+                            StateId = userViewModel.StateId
+                        };
+            UserViewModel userModel = users.FirstOrDefault();
+            Users user = new Users
+            {
+                Id = userModel.Id,
+                UserName = userModel.UserName,
+                EmailId = userModel.EmailId,
+                UserPassword = userModel.UserPassword,
+                IsActive = userModel.IsActive,
+                LastLoginDate = userModel.LastLoginDate,
+                FirstName = userModel.FirstName,
+                LastName = userModel.LastName,
+                RoleId = userModel.RoleId,
+                Status = userModel.Status,
+                CountryId = userModel.CountryId,
+                ZoneId = userModel.ZoneId,
+                BranchId = userModel.BranchId,
+                StateId = userViewModel.StateId
+            };
+            if (userViewModel.Id > 0)
             {
                 return PutUsers(user);
             }

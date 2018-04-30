@@ -21,21 +21,30 @@ namespace SchoolService_Master.Controllers
         // GET: api/StateMasters
         public IQueryable<StateMasterViewModel> GetStates()
         {
-            var states = from b in db.States
-                            select new StateMasterViewModel()
-                            {
-                                Id = b.Id,
-                                Name = b.StateName
-                            };
-
+            var states = from s in db.States
+                         select new StateMasterViewModel()
+                         {
+                             Id = s.Id,
+                             Name = s.StateName
+                         };
             return states;
         }
 
         // GET: api/StateMasters/5
-        [ResponseType(typeof(StateMaster))]
-        public async Task<IHttpActionResult> GetStateMaster(int id)
+        [ResponseType(typeof(StateMasterViewModel))]
+        public IHttpActionResult GetStateMaster(int branchId)
         {
-            StateMaster stateMaster = await db.States.FindAsync(id);
+            var stateMaster = from b in db.States
+                              join br in db.Branches on b.BranchId equals br.Id
+                              where b.BranchId == branchId
+                              select new StateMasterViewModel()
+                              {
+                                  Id = b.Id,
+                                  Name = b.StateName,
+                                  BranchId = b.BranchId,
+                                  BranchName = br.BranchName
+                              };
+
             if (stateMaster == null)
             {
                 return NotFound();

@@ -15,10 +15,13 @@ using SchoolService_Master.ViewModels;
 
 namespace SchoolService_Master.Controllers
 {
+    [Authorize]
     public class SchoolMastersController : ApiController
     {
         private SchoolServiceContext db = new SchoolServiceContext();
 
+
+        //[Route("webapi/SchoolMasters/{countryId}/{stateId}/{cityId}")]
         // GET: api/SchoolMasters
         public IQueryable<SchoolMaster> GetSchools(int countryId, int stateId, int cityId)
         {
@@ -41,22 +44,16 @@ namespace SchoolService_Master.Controllers
                 schools = schools.Where(x => x.CountryId == countryId);
             if (stateId > 0)
                 schools = schools.Where(x => x.StateId == stateId);
-            if (cityId > 0)
-                schools = schools.Where(x => x.CityId == cityId);
+            //if (cityId > 0)
+            //    schools = schools.Where(x => x.CityId == cityId);
             return schools;
         }
 
         // GET: api/SchoolMasters/5
         [ResponseType(typeof(SchoolMaster))]
-        public async Task<IHttpActionResult> GetSchoolMaster(int id)
+        public IHttpActionResult GetSchoolMaster()
         {
-            SchoolMaster schoolMaster = await db.Schools.FindAsync(id);
-            if (schoolMaster == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(schoolMaster);
+            return Ok(db.Schools);
         }
 
         public IHttpActionResult PutSchoolMaster(SchoolMaster schoolMaster)
@@ -97,6 +94,23 @@ namespace SchoolService_Master.Controllers
             {
                 return BadRequest(ModelState);
             }
+
+            var school = from state in db.States
+                         join branch in db.Branches on state.BranchId equals branch.Id
+                         join zone in db.Zones on branch.ZoneId equals zone.Id
+                         join country in db.Countries on zone.CountryId equals country.Id
+                         where state.Id == schoolMaster.StateId
+                         select new SchoolMasterViewModel
+                         {
+                             CountryId = country.Id,
+                             ZoneId = zone.Id,
+                             BranchId = branch.Id,
+                             StateId = schoolMaster.StateId
+                         };
+            var schoolModel = school.FirstOrDefault();
+            schoolMaster.CountryId = schoolModel.CountryId;
+            schoolMaster.ZoneId = schoolModel.ZoneId;
+            schoolMaster.BranchId = schoolModel.BranchId;
 
             if (schoolMaster.Id > 0)
             {

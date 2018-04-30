@@ -10,6 +10,8 @@ namespace SchoolService_Master.ViewModels
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int ZoneId { get; set; }
+        public string ZoneName { get; set; }
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
         public static implicit operator BranchMasterViewModel(BranchMaster branchMaster)
@@ -17,7 +19,8 @@ namespace SchoolService_Master.ViewModels
             return new BranchMasterViewModel
             {
                 Id = branchMaster.Id,
-                Name = branchMaster.BranchName
+                Name = branchMaster.BranchName,
+                ZoneId = branchMaster.ZoneId
             };
         }
 
@@ -26,7 +29,8 @@ namespace SchoolService_Master.ViewModels
             return new BranchMaster
             {
                 Id = branchMasterViewModel.Id,
-                BranchName = branchMasterViewModel.Name
+                BranchName = branchMasterViewModel.Name,
+                ZoneId = branchMasterViewModel.ZoneId
             };
         }
 

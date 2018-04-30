@@ -15,6 +15,7 @@ using SchoolService_Master.ViewModels;
 
 namespace SchoolService_Master.Controllers
 {
+    [Authorize]
     public class GeoHierarchiesController : ApiController
     {
         private SchoolServiceContext db = new SchoolServiceContext();
@@ -27,7 +28,8 @@ namespace SchoolService_Master.Controllers
                                  join STA in db.States on GH.StateId equals STA.Id
                                  join ZON in db.Zones on GH.ZoneId equals ZON.Id
                                  join BRA in db.Branches on GH.BranchId equals BRA.Id
-                                 join SUP in db.Supervisors on GH.SupervisorId equals SUP.Id
+                                 join SUP in db.Users on GH.SupervisorId equals SUP.Id
+                                 join MAR in db.Users on GH.SupervisorId equals MAR.Id
                                  select new GeoHierarchyViewModel
                                  {
                                      Id = GH.Id,
@@ -40,8 +42,9 @@ namespace SchoolService_Master.Controllers
                                      BranchId = GH.BranchId,
                                      BranchName = BRA.BranchName,
                                      SupervisorId = GH.SupervisorId,
-                                     SupervisorName = SUP.SupervisorName,
-                                     MarketingHierarchyUser = GH.MarketingHierarchyUser,
+                                     SupervisorName = SUP.FirstName + " " + SUP.LastName,
+                                     MarketingHierarchyUserId = GH.MarketingHierarchyUserId,
+                                     MarketingHierarchyUserName = MAR.FirstName + " " + MAR.LastName
                                  };
             return geohierarchies;
         }
@@ -108,7 +111,7 @@ namespace SchoolService_Master.Controllers
         }
 
         // POST: api/GeoHierarchies
-        [ResponseType(typeof(GeoHierarchy))]
+        [ResponseType(typeof(GeoHierarchyViewModel))]
         public async Task<IHttpActionResult> PostGeoHierarchy(GeoHierarchyViewModel geoHierarchyViewModel)
         {
             if (!ModelState.IsValid)

@@ -11,19 +11,30 @@ namespace SchoolService_Master.Models
     {
         [Key]
         public int Id { get; set; }
+        [Required]
         public string SchoolName { get; set; }
+        [Required]
         public string HouseNumber { get; set; }
+        [Required]
         public string Street { get; set; }
+        [Required]
         public string Area { get; set; }
         public string LGA { get; set; }
         public int CityId { get; set; }
+        [Required]
         public int StateId { get; set; }
+        [Required]
+        public int BranchId { get; set; }
+        [Required]
+        public int ZoneId { get; set; }
+        [Required]
         public int CountryId { get; set; }
         public string LandMark { get; set; }
         public string GeoCoordinate { get; set; }
         public string PrincipalName { get; set; }
         public int PhoneNumber { get; set; }
         public int SchoolPhoneNumber { get; set; }
+        [Required]
         public string SchoolType { get; set; }
         public int TotalPopulation { get; set; }
         public string TotalEducationlevel { get; set; }

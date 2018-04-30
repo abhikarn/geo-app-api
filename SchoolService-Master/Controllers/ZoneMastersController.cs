@@ -19,14 +19,18 @@ namespace SchoolService_Master.Controllers
         private SchoolServiceContext db = new SchoolServiceContext();
 
         // GET: api/ZoneMasters
-        public IQueryable<ZoneMasterViewModel> GetZones()
+        public IQueryable<ZoneMasterViewModel> GetZones(int countryId)
         {
             var zones = from b in db.Zones
-                           select new ZoneMasterViewModel()
-                           {
-                               Id = b.Id,
-                               Name = b.ZoneName
-                           };
+                        join c in db.Countries on b.CountryId equals c.Id
+                        where c.Id == countryId
+                        select new ZoneMasterViewModel()
+                        {
+                            Id = b.Id,
+                            Name = b.ZoneName,
+                            CountryId = b.CountryId,
+                            CountryName = c.CountryrName
+                        };
 
             return zones;
         }

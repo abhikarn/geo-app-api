@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using Microsoft.Owin.Security.OAuth;
 
 namespace SchoolService_Master
 {
@@ -19,6 +20,9 @@ namespace SchoolService_Master
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver =
                 new CamelCasePropertyNamesContractResolver();
             config.MapHttpAttributeRoutes();
+
+            //config.SuppressHostPrincipal();
+            //config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

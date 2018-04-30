@@ -11,6 +11,7 @@ namespace SchoolService_Master.Models
         [Key]
         public int Id { get; set; }
         public string BranchName { get; set; }
+        public int ZoneId { get; set; }
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
     }
