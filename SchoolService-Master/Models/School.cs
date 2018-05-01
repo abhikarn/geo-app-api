@@ -44,6 +44,7 @@ namespace SchoolService_Master.Models
         public string SignageStatus { get; set; }
         public string IfBad { get; set; }
         public string ClassRoomCorex { get; set; }
+        public byte[] SchoolImage { get; set; }
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
     }

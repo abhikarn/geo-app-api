@@ -33,6 +33,7 @@ namespace SchoolService_Master.ViewModels
         public string SignageStatus { get; set; }
         public string IfBad { get; set; }
         public string ClassRoomCorex { get; set; }
+        public byte[] SchoolImage { get; set; }
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
         public string Code { get; set; }
@@ -64,6 +65,7 @@ namespace SchoolService_Master.ViewModels
                 SignageStatus = schoolMaster.SignageStatus,
                 IfBad = schoolMaster.IfBad,
                 ClassRoomCorex = schoolMaster.ClassRoomCorex,
+                SchoolImage = schoolMaster.SchoolImage,
                 Code = string.Empty
             };
         }
@@ -95,6 +97,7 @@ namespace SchoolService_Master.ViewModels
                 SignageStatus = schoolMasterViewModel.SignageStatus,
                 IfBad = schoolMasterViewModel.IfBad,
                 ClassRoomCorex = schoolMasterViewModel.ClassRoomCorex,
+                SchoolImage = schoolMasterViewModel.SchoolImage
             };
         }
     }

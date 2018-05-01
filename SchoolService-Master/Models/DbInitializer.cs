@@ -137,10 +137,10 @@ namespace SchoolService_Master.Models
             List<Role> roles = new List<Role> {
                new Role() { Name = "Admin", Description="Admin", IsActive=true },
                new Role() { Name = "Supervisor", Description="Supervisor", IsActive=true},
-               new Role() { Name = "Marketing User", Description="Marketing Hierarchy", IsActive=true },
-               new Role() { Name = "Country Head", Description="Country Head", IsActive=true },
-               new Role() { Name = "Branch Head", Description="Branch Head", IsActive=true },
-               new Role() { Name = "Zone Head", Description="Zone Head", IsActive=true }
+               new Role() { Name = "Marketing User", Description="Hierarchy user", IsActive=true },
+               new Role() { Name = "Country Head", Description="Country Head user", IsActive=true },
+               new Role() { Name = "Zone Head", Description="Zone user", IsActive=true },
+               new Role() { Name = "Branch Head", Description="Branch user", IsActive=true }
             };
             context.Roles.AddRange(roles);
             context.SaveChanges();

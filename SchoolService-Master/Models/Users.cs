@@ -7,7 +7,7 @@ using System.Web;
 
 namespace SchoolService_Master.Models
 {
-    public class Users 
+    public class Users
     {
 
         /// <summary>
@@ -44,6 +44,7 @@ namespace SchoolService_Master.Models
         /// <summary>
         /// 
         /// </summary>
+        [Required]
         public string FirstName { get; set; }
         /// <summary>
         /// 
