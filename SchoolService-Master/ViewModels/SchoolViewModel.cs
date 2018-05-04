@@ -25,9 +25,9 @@ namespace SchoolService_Master.ViewModels
         public string PhoneNumber { get; set; }
         public string SchoolPhoneNumber { get; set; }
         public string SchoolType { get; set; }
-        public int TotalPopulation { get; set; }
+        public string TotalPopulation { get; set; }
         public string TotalEducationlevel { get; set; }
-        public int NursaryToPrimary3Population { get; set; }
+        public string NursaryToPrimary3Population { get; set; }
         public bool PrincipalConcent { get; set; }
         public bool SingageAvailable { get; set; }
         public string SignageStatus { get; set; }
