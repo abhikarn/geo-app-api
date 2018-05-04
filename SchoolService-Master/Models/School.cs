@@ -32,8 +32,8 @@ namespace SchoolService_Master.Models
         public string LandMark { get; set; }
         public string GeoCoordinate { get; set; }
         public string PrincipalName { get; set; }
-        public int PhoneNumber { get; set; }
-        public int SchoolPhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
+        public string SchoolPhoneNumber { get; set; }
         [Required]
         public string SchoolType { get; set; }
         public int TotalPopulation { get; set; }
