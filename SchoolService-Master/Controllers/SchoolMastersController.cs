@@ -16,7 +16,7 @@ using SchoolService_Master.ViewModels;
 
 namespace SchoolService_Master.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class SchoolMastersController : ApiController
     {
         private SchoolServiceContext db = new SchoolServiceContext();
@@ -98,7 +98,7 @@ namespace SchoolService_Master.Controllers
             {
                 db.SaveChanges();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
                 if (!SchoolMasterExists(schoolMaster.Id))
                 {
@@ -114,11 +114,10 @@ namespace SchoolService_Master.Controllers
         }
 
         // POST: api/SchoolMasters
-        [ResponseType(typeof(SchoolMaster))]
-        public async Task<IHttpActionResult> PostSchoolMaster(SchoolMaster schoolMaster)
+        [ResponseType(typeof(SchoolMasterViewModel))]
+        public async Task<IHttpActionResult> PostSchoolMaster(SchoolMasterViewModel schoolMasterViewModel)
         {
-            schoolMaster.Created = DateTime.Now;
-            schoolMaster.Updated = DateTime.Now;
+            
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -128,19 +127,51 @@ namespace SchoolService_Master.Controllers
                          join branch in db.Branches on state.BranchId equals branch.Id
                          join zone in db.Zones on branch.ZoneId equals zone.Id
                          join country in db.Countries on zone.CountryId equals country.Id
-                         where state.Id == schoolMaster.StateId
+                         where state.Id == schoolMasterViewModel.StateId
                          select new SchoolMasterViewModel
                          {
                              CountryId = country.Id,
                              ZoneId = zone.Id,
                              BranchId = branch.Id,
-                             StateId = schoolMaster.StateId
+                             StateId = schoolMasterViewModel.StateId,
+                             SchoolType = schoolMasterViewModel.SchoolType,
+                             Name = schoolMasterViewModel.Name,
+                             HouseNumber = schoolMasterViewModel.HouseNumber,
+                             Street = schoolMasterViewModel.Street,
+                             Area = schoolMasterViewModel.Area,
+                             LGA = schoolMasterViewModel.LGA,
+                             LandMark = schoolMasterViewModel.LandMark,
+                             GeoCoordinate = schoolMasterViewModel.GeoCoordinate,
+                             PrincipalName = schoolMasterViewModel.PrincipalName,
+                             PhoneNumber = schoolMasterViewModel.PhoneNumber,
+                             SchoolPhoneNumber = schoolMasterViewModel.SchoolPhoneNumber,
+                             TotalPopulation = schoolMasterViewModel.TotalPopulation,
+                             TotalEducationlevel = schoolMasterViewModel.TotalEducationlevel,
+                             NursaryToPrimary3Population = schoolMasterViewModel.NursaryToPrimary3Population,
                          };
             var schoolModel = school.FirstOrDefault();
-            schoolMaster.CountryId = schoolModel.CountryId;
-            schoolMaster.ZoneId = schoolModel.ZoneId;
-            schoolMaster.BranchId = schoolModel.BranchId;
-
+            SchoolMaster schoolMaster = new SchoolMaster();
+            schoolMaster.Id = schoolMasterViewModel.Id;
+            schoolMaster.CountryId = schoolMasterViewModel.CountryId;
+            schoolMaster.ZoneId = schoolMasterViewModel.ZoneId;
+            schoolMaster.BranchId = schoolMasterViewModel.BranchId;
+            schoolMaster.StateId = schoolMasterViewModel.StateId;
+            schoolMaster.SchoolType = schoolMasterViewModel.SchoolType;
+            schoolMaster.SchoolName = schoolMasterViewModel.Name;
+            schoolMaster.HouseNumber = schoolMasterViewModel.HouseNumber;
+            schoolMaster.Street = schoolMasterViewModel.Street;
+            schoolMaster.Area = schoolMasterViewModel.Area;
+            schoolMaster.LGA = schoolMasterViewModel.LGA;
+            schoolMaster.LandMark = schoolMasterViewModel.LandMark;
+            schoolMaster.GeoCoordinate = schoolMasterViewModel.GeoCoordinate;
+            schoolMaster.PrincipalName = schoolMasterViewModel.PrincipalName;
+            schoolMaster.PhoneNumber = schoolMasterViewModel.PhoneNumber;
+            schoolMaster.SchoolPhoneNumber = schoolMasterViewModel.SchoolPhoneNumber;
+            schoolMaster.TotalPopulation = schoolMasterViewModel.TotalPopulation;
+            schoolMaster.TotalEducationlevel = schoolMasterViewModel.TotalEducationlevel;
+            schoolMaster.NursaryToPrimary3Population = schoolMasterViewModel.NursaryToPrimary3Population;
+            schoolMaster.Created = DateTime.Now;
+            schoolMaster.Updated = DateTime.Now;
             if (schoolMaster.Id > 0)
             {
                 return PutSchoolMaster(schoolMaster);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -16,6 +17,7 @@ namespace SchoolService_Master.Controllers
     {
         private SchoolServiceContext db = new SchoolServiceContext();
         // GET: webapi/Login comment
+        [HttpGet]
         [ResponseType(typeof(UserViewModel)), AllowAnonymous]
         public IHttpActionResult Login(UserViewModel userViewModel)
         {
@@ -56,6 +58,16 @@ namespace SchoolService_Master.Controllers
             //var encriptedTicket = FormsAuthentication.Encrypt(ticket);
             //user.authToken = encriptedTicket;
             return Ok(users.FirstOrDefault());
+        }
+
+        // GET: webapi/Token comment
+        [HttpGet]
+        [ResponseType(typeof(object))]
+        [Route("webapi/Token")]
+        public IHttpActionResult GetToken()
+        {
+            dynamic AccessToken = new { access_token = ConfigurationManager.AppSettings["ClientId"].ToString(), token_type = "bearer" };
+            return Ok(AccessToken);
         }
     }
 }

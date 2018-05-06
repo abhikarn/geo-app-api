@@ -14,7 +14,7 @@ namespace SchoolService_Master.Controllers
         private SchoolServiceContext db = new SchoolServiceContext();
 
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         //[Route("webapi/Masters/{countryId}/{stateId}/{cityId}")]
         // GET: webapi/Masters
         public Masters GetMasters(int stateId)

@@ -15,7 +15,7 @@ using SchoolService_Master.ViewModels;
 
 namespace SchoolService_Master.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class GeoHierarchiesController : ApiController
     {
         private SchoolServiceContext db = new SchoolServiceContext();

@@ -16,8 +16,8 @@ using SchoolService_Master.ViewModels;
 
 namespace SchoolService_Master.Controllers
 {
-    [ClientIdAuthorizationProvider]
-    [Authorize]
+    //[ClientIdAuthorizationProvider]
+    //[Authorize]
     public class UsersController : ApiController
     {
         private SchoolServiceContext db = new SchoolServiceContext();
