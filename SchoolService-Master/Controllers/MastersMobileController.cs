@@ -29,7 +29,7 @@ namespace SchoolService_Master.Controllers
             //List<CityMaster> cityMaster= db.City.ToList();
             List<Role> role = db.Roles.ToList();
             //List<SchoolMaster> LstShoolMaster = db.Schools.ToList();
-            List<SchoolMaster> LstShoolMaster = (new SchoolMastersController().GetSchools(countryId, stateId, cityId)).OrderBy(x => x.SchoolName).ToList();
+            List<SchoolMasterViewModel> LstShoolMaster = (new SchoolMastersController().GetSchools()).ToList();
             masters.CountryMaster = countryMaster.Select<CountryMaster, CountryMasterViewModel>(x => x).OrderBy(x => x.Name).ToList();
             masters.RoleMaster = role.Select<Role, RoleMasterViewModel>(x => x).OrderBy(x => x.Name).ToList();
             //masters.ZoneMaster = zoneMaster.Select<ZoneMaster, ZoneMasterViewModel>(x => x).ToList();
@@ -43,13 +43,9 @@ namespace SchoolService_Master.Controllers
             masters.SupervisorMaster = new List<SupervisorMasterViewModel> { new SupervisorMasterViewModel() };
             masters.CityNewMaster = new List<CityViewModel> { new CityViewModel() };
 
-            List<SchoolMasterViewModel> LstSchoolMasterViewModel = new List<SchoolMasterViewModel>();
             List<SchoolMasterMultiSelect> LstSchoolMasterMultiSelect = new List<SchoolMasterMultiSelect>();
-            foreach (SchoolMaster item in LstShoolMaster)
-            {
-                LstSchoolMasterViewModel.Add(new SchoolMasterViewModel { Name = item.SchoolName, Id = item.Id, Code = string.Empty });
-            }
-            foreach (SchoolMasterViewModel item in LstSchoolMasterViewModel)
+
+            foreach (SchoolMasterViewModel item in LstShoolMaster)
             {
                 LstSchoolMasterMultiSelect.Add(new SchoolMasterMultiSelect { Label = item.Name, Value = item });
             }

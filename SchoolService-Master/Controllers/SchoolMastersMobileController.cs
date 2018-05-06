@@ -19,43 +19,69 @@ namespace SchoolService_Master.Controllers
     public class SchoolMastersMobileController : ApiController
     {
         private SchoolServiceContext db = new SchoolServiceContext();
-        IQueryable<SchoolMaster> schools;
 
 
         //[Route("webapi/SchoolMastersMobile/{countryId}/{stateId}/{cityId}")]
         // GET: api/SchoolMastersMobile
-        public IQueryable<SchoolMaster> GetSchools(int countryId, int stateId, int cityId)
+        public IQueryable<SchoolMasterViewModel> GetSchools()
         {
-            //var schools = from b in db.Schools
-            //              select new SchoolMasterViewModel()
-            //              {
-            //                  Id = b.Id,
-            //                  SchoolName = b.SchoolName,
-            //                  HouseNumber = b.HouseNumber,
-            //                  Streat = b.Streat,
-            //                  Area = b.Area,
-            //                  LGA = b.LGA,
-            //                  LandMark = b.LandMark
-            //              };
+            var schools = from b in db.Schools
+                          join s in db.States on b.StateId equals s.Id
+                          //where b.StateId == stateId
+                          orderby b.SchoolName
+                          select new SchoolMasterViewModel()
+                          {
+                              Id = b.Id,
+                              Name = b.SchoolName,
+                              HouseNumber = b.HouseNumber,
+                              Street = b.Street,
+                              Area = b.Area,
+                              LGA = b.LGA,
+                              LandMark = b.LandMark,
+                              StateId = b.StateId,
+                              StateName = s.StateName,
+                              GeoCoordinate = b.GeoCoordinate,
+                              PrincipalName = b.PrincipalName,
+                              PhoneNumber = b.PhoneNumber,
+                              SchoolPhoneNumber = b.SchoolPhoneNumber,
+                              SchoolType = b.SchoolType,
+                              TotalPopulation = b.TotalPopulation,
+                              TotalEducationlevel = b.TotalEducationlevel,
+                              NursaryToPrimary3Population = b.NursaryToPrimary3Population,
+                          };
 
-            //return schools;
-            schools = db.Schools.OrderBy(x => x.SchoolName);
-            if (countryId > 0)
-                schools = schools.Where(x => x.CountryId == countryId);
-            if (stateId > 0)
-                schools = schools.Where(x => x.StateId == stateId);
-            //if (cityId > 0)
-            //    schools = schools.Where(x => x.CityId == cityId);
             return schools;
         }
 
-        // GET: api/SchoolMasters/5
-        [ResponseType(typeof(SchoolMaster))]
-        public IHttpActionResult GetSchoolMaster()
-        {
-            schools = db.Schools.OrderBy(x => x.SchoolName);
-            return Ok(schools);
-        }
+        // GET: api/SchoolMastersMobile/5
+        //[ResponseType(typeof(SchoolMasterViewModel))]
+        //public IHttpActionResult GetSchoolMaster()
+        //{
+        //    var schools = from b in db.Schools
+        //                  join s in db.States on b.StateId equals s.Id
+        //                  orderby b.SchoolName
+        //                  select new SchoolMasterViewModel()
+        //                  {
+        //                      Id = b.Id,
+        //                      Name = b.SchoolName,
+        //                      HouseNumber = b.HouseNumber,
+        //                      Street = b.Street,
+        //                      Area = b.Area,
+        //                      LGA = b.LGA,
+        //                      LandMark = b.LandMark,
+        //                      StateId = b.StateId,
+        //                      StateName = s.StateName,
+        //                      GeoCoordinate = b.GeoCoordinate,
+        //                      PrincipalName = b.PrincipalName,
+        //                      PhoneNumber = b.PhoneNumber,
+        //                      SchoolPhoneNumber = b.SchoolPhoneNumber,
+        //                      SchoolType = b.SchoolType,
+        //                      TotalPopulation = b.TotalPopulation,
+        //                      TotalEducationlevel = b.TotalEducationlevel,
+        //                      NursaryToPrimary3Population = b.NursaryToPrimary3Population,
+        //                  };
+        //    return Ok(schools);
+        //}
 
         public IHttpActionResult PutSchoolMaster(SchoolMaster schoolMaster)
         {
@@ -87,48 +113,51 @@ namespace SchoolService_Master.Controllers
 
         // POST: api/SchoolMastersMobile
         [ResponseType(typeof(SchoolMaster))]
-        public async Task<IHttpActionResult> PostSchoolMaster(SchoolMaster schoolMaster)
+        public async Task<IHttpActionResult> PostSchoolMaster(SchoolMaster[] schoolMasters)
         {
-            schoolMaster.Created = DateTime.Now;
-            schoolMaster.Updated = DateTime.Now;
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            var school = from state in db.States
-                         join branch in db.Branches on state.BranchId equals branch.Id
-                         join zone in db.Zones on branch.ZoneId equals zone.Id
-                         join country in db.Countries on zone.CountryId equals country.Id
-                         where state.Id == schoolMaster.StateId
-                         select new SchoolMasterViewModel
-                         {
-                             CountryId = country.Id,
-                             ZoneId = zone.Id,
-                             BranchId = branch.Id,
-                             StateId = schoolMaster.StateId
-                         };
-            var schoolModel = school.FirstOrDefault();
-            schoolMaster.CountryId = schoolModel.CountryId;
-            schoolMaster.ZoneId = schoolModel.ZoneId;
-            schoolMaster.BranchId = schoolModel.BranchId;
-
-            if (schoolMaster.Id > 0)
+            foreach (SchoolMaster schoolMaster in schoolMasters)
             {
-                return PutSchoolMaster(schoolMaster);
-            }
-            try
-            {
-                db.Schools.Add(schoolMaster);
-                await db.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                schoolMaster.Created = DateTime.Now;
+                schoolMaster.Updated = DateTime.Now;
+                var school = from state in db.States
+                             join branch in db.Branches on state.BranchId equals branch.Id
+                             join zone in db.Zones on branch.ZoneId equals zone.Id
+                             join country in db.Countries on zone.CountryId equals country.Id
+                             where state.Id == schoolMaster.StateId
+                             select new SchoolMasterViewModel
+                             {
+                                 CountryId = country.Id,
+                                 ZoneId = zone.Id,
+                                 BranchId = branch.Id,
+                                 StateId = schoolMaster.StateId
+                             };
+                var schoolModel = school.FirstOrDefault();
+                schoolMaster.CountryId = schoolModel.CountryId;
+                schoolMaster.ZoneId = schoolModel.ZoneId;
+                schoolMaster.BranchId = schoolModel.BranchId;
+
+                if (schoolMaster.Id > 0)
+                {
+                    return PutSchoolMaster(schoolMaster);
+                }
+                try
+                {
+                    db.Schools.Add(schoolMaster);
+                    await db.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
 
-
-            return CreatedAtRoute("DefaultApi", new { id = schoolMaster.Id }, schoolMaster);
+            return Ok();
+            //return CreatedAtRoute("DefaultApi", new { id = schoolMaster.Id }, schoolMaster);
         }
 
         // DELETE: api/SchoolMastersMobile/5
