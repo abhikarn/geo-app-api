@@ -49,6 +49,6 @@ namespace SchoolService_Master.Models
         public DateTime Updated { get; set; }
         public string Source { get; set; }
         public bool Approved { get; set; }
-        public bool Status { get; set; }
+        public string Status { get; set; }
     }
 }
