@@ -23,35 +23,42 @@ namespace SchoolService_Master.Controllers
 
         //[Route("webapi/SchoolMastersMobile/{countryId}/{stateId}/{cityId}")]
         // GET: api/SchoolMastersMobile
-        public IQueryable<SchoolMasterViewModel> GetSchools()
-        {
-            var schools = from b in db.Schools
-                          join s in db.States on b.StateId equals s.Id
-                          //where b.StateId == stateId
-                          orderby b.SchoolName
-                          select new SchoolMasterViewModel()
-                          {
-                              Id = b.Id,
-                              Name = b.SchoolName,
-                              HouseNumber = b.HouseNumber,
-                              Street = b.Street,
-                              Area = b.Area,
-                              LGA = b.LGA,
-                              LandMark = b.LandMark,
-                              StateId = b.StateId,
-                              StateName = s.StateName,
-                              GeoCoordinate = b.GeoCoordinate,
-                              PrincipalName = b.PrincipalName,
-                              PhoneNumber = b.PhoneNumber,
-                              SchoolPhoneNumber = b.SchoolPhoneNumber,
-                              SchoolType = b.SchoolType,
-                              TotalPopulation = b.TotalPopulation,
-                              TotalEducationlevel = b.TotalEducationlevel,
-                              NursaryToPrimary3Population = b.NursaryToPrimary3Population,
-                          };
+        //public IQueryable<SchoolMasterViewModel> GetSchools()
+        //{
+        //    var schools = from b in db.Schools
+        //                  join s in db.States on b.StateId equals s.Id
+        //                  //where b.StateId == stateId
+        //                  orderby b.SchoolName
+        //                  select new SchoolMasterViewModel()
+        //                  {
+        //                      Id = b.Id,
+        //                      Name = b.SchoolName,
+        //                      HouseNumber = b.HouseNumber,
+        //                      Street = b.Street,
+        //                      Area = b.Area,
+        //                      LGA = b.LGA,
+        //                      LandMark = b.LandMark,
+        //                      StateId = b.StateId,
+        //                      StateName = s.StateName,
+        //                      GeoCoordinate = b.GeoCoordinate,
+        //                      PrincipalName = b.PrincipalName,
+        //                      PhoneNumber = b.PhoneNumber,
+        //                      SchoolPhoneNumber = b.SchoolPhoneNumber,
+        //                      SchoolType = b.SchoolType,
+        //                      TotalPopulation = b.TotalPopulation,
+        //                      TotalEducationlevel = b.TotalEducationlevel,
+        //                      NursaryToPrimary3Population = b.NursaryToPrimary3Population,
+        //                  };
 
-            return schools;
+        //    return schools;
+        //}
+        [ResponseType(typeof(SchoolMaster[]))]
+        public IHttpActionResult GetSchools()
+        {
+           var schools = db.Schools.OrderBy(x => x.SchoolName);
+            return Ok(schools);
         }
+
 
         // GET: api/SchoolMastersMobile/5
         //[ResponseType(typeof(SchoolMasterViewModel))]
@@ -137,10 +144,12 @@ namespace SchoolService_Master.Controllers
                                  StateId = schoolMaster.StateId
                              };
                 var schoolModel = school.FirstOrDefault();
-                schoolMaster.CountryId = schoolModel.CountryId;
-                schoolMaster.ZoneId = schoolModel.ZoneId;
-                schoolMaster.BranchId = schoolModel.BranchId;
-
+                if (schoolModel != null)
+                {
+                    schoolMaster.CountryId = schoolModel.CountryId;
+                    schoolMaster.ZoneId = schoolModel.ZoneId;
+                    schoolMaster.BranchId = schoolModel.BranchId;
+                }
                 if (schoolMaster.Id > 0)
                 {
                     return PutSchoolMaster(schoolMaster);
