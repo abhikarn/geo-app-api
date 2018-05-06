@@ -6,6 +6,7 @@ using System.Web.Http;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
+using SchoolService_Master.Common;
 using SchoolService_Master.Controllers;
 using SchoolService_Master.Provider;
 
@@ -31,7 +32,8 @@ namespace SchoolService_Master.App_Start
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(20),
-                Provider = new SimpleAuthorizationServerProvider()
+                Provider = new SimpleAuthorizationServerProvider(),
+                //RefreshTokenProvider = new SimpleRefreshTokenProvider()
             };
 
             app.UseOAuthBearerTokens(oAuthServerOptions);

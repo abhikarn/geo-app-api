@@ -11,11 +11,13 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using SchoolService_Master.Models;
+using SchoolService_Master.Provider;
 using SchoolService_Master.ViewModels;
 
 namespace SchoolService_Master.Controllers
 {
-    //[Authorize]
+    [ClientIdAuthorizationProvider]
+    [Authorize]
     public class UsersController : ApiController
     {
         private SchoolServiceContext db = new SchoolServiceContext();
@@ -28,6 +30,7 @@ namespace SchoolService_Master.Controllers
                         join country in db.Countries on user.CountryId equals country.Id
                         join state in db.States on user.StateId equals state.Id
                         //join city in db.City on user.CityId equals city.Id
+                        orderby user.UserName
                         select new UserViewModel
                         {
                             Id = user.Id,
@@ -61,6 +64,7 @@ namespace SchoolService_Master.Controllers
                         join country in db.Countries on user.CountryId equals country.Id
                         join state in db.States on user.StateId equals state.Id
                         where roles.Name == role
+                        orderby user.UserName
                         select new UserViewModel
                         {
                             Id = user.Id,

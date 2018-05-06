@@ -3,28 +3,27 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using SchoolService_Master.Models;
+using SchoolService_Master.Provider;
 using SchoolService_Master.ViewModels;
 
 namespace SchoolService_Master.Controllers
 {
-    [Authorize]
-    public class SchoolMastersController : ApiController
+    [ClientIdAuthorizationProvider]
+    public class SchoolMastersMobileController : ApiController
     {
         private SchoolServiceContext db = new SchoolServiceContext();
         IQueryable<SchoolMaster> schools;
 
 
-        //[Route("webapi/SchoolMasters/{countryId}/{stateId}/{cityId}")]
-        // GET: api/SchoolMasters
+        //[Route("webapi/SchoolMastersMobile/{countryId}/{stateId}/{cityId}")]
+        // GET: api/SchoolMastersMobile
         public IQueryable<SchoolMaster> GetSchools(int countryId, int stateId, int cityId)
         {
             //var schools = from b in db.Schools
@@ -86,7 +85,7 @@ namespace SchoolService_Master.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/SchoolMasters
+        // POST: api/SchoolMastersMobile
         [ResponseType(typeof(SchoolMaster))]
         public async Task<IHttpActionResult> PostSchoolMaster(SchoolMaster schoolMaster)
         {
@@ -132,7 +131,7 @@ namespace SchoolService_Master.Controllers
             return CreatedAtRoute("DefaultApi", new { id = schoolMaster.Id }, schoolMaster);
         }
 
-        // DELETE: api/SchoolMasters/5
+        // DELETE: api/SchoolMastersMobile/5
         [ResponseType(typeof(SchoolMaster))]
         public async Task<IHttpActionResult> DeleteSchoolMaster(int id)
         {

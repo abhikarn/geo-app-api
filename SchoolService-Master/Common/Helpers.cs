@@ -18,5 +18,11 @@ namespace SchoolService_Master.Common
             }
             return token;
         }
+
+        public static string GenerateClientId()
+        {
+            return Guid.NewGuid().ToString("N");
+        }
+
     }
 }

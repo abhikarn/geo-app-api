@@ -5,16 +5,17 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using SchoolService_Master.Models;
+using SchoolService_Master.Provider;
 using SchoolService_Master.ViewModels;
 
 namespace SchoolService_Master.Controllers
 {
-    public class MastersController : ApiController
+    [ClientIdAuthorizationProvider]
+    public class MastersMobileController : ApiController
     {
         private SchoolServiceContext db = new SchoolServiceContext();
 
         [HttpGet]
-        [Authorize]
         //[Route("webapi/Masters/{countryId}/{stateId}/{cityId}")]
         // GET: webapi/Masters
         public Masters GetMasters(int countryId, int stateId, int cityId)
