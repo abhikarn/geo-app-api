@@ -47,7 +47,7 @@ namespace SchoolService_Master.Controllers
 
             foreach (SchoolMasterViewModel item in LstShoolMaster)
             {
-                LstSchoolMasterMultiSelect.Add(new SchoolMasterMultiSelect { Label = item.ShoolName, Value = item });
+                LstSchoolMasterMultiSelect.Add(new SchoolMasterMultiSelect { Label = item.SchoolName, Value = item });
             }
             masters.SchoolMaster = LstSchoolMasterMultiSelect;
             return masters;
