@@ -17,7 +17,7 @@ namespace SchoolService_Master.Controllers
     {
         private SchoolServiceContext db = new SchoolServiceContext();
         // GET: webapi/Login comment
-        [HttpGet]
+        [HttpPost]
         [ResponseType(typeof(UserViewModel)), AllowAnonymous]
         public IHttpActionResult Login(UserViewModel userViewModel)
         {
@@ -62,7 +62,7 @@ namespace SchoolService_Master.Controllers
 
         // GET: webapi/Token comment
         [HttpGet]
-        [ResponseType(typeof(object))]
+        [ResponseType(typeof(object)), AllowAnonymous]
         [Route("webapi/Token")]
         public IHttpActionResult GetToken()
         {
