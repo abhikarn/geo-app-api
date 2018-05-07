@@ -9,7 +9,7 @@ namespace SchoolService_Master.ViewModels
     public class SchoolMasterViewModel
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string ShoolName { get; set; }
         public string HouseNumber { get; set; }
         public string Street { get; set; }
         public string Area { get; set; }
@@ -41,6 +41,9 @@ namespace SchoolService_Master.ViewModels
         public byte[] SchoolImage { get; set; }
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
+        public string Source { get; set; }
+        public bool Approved { get; set; }
+        public string Status { get; set; }
         public string Code { get; set; }
 
         public static implicit operator SchoolMasterViewModel(SchoolMaster schoolMaster)
@@ -48,7 +51,7 @@ namespace SchoolService_Master.ViewModels
             return new SchoolMasterViewModel
             {
                 Id = schoolMaster.Id,
-                Name = schoolMaster.SchoolName,
+                ShoolName = schoolMaster.SchoolName,
                 HouseNumber = schoolMaster.Street,
                 Street = schoolMaster.SchoolName,
                 Area = schoolMaster.Area,
@@ -80,7 +83,7 @@ namespace SchoolService_Master.ViewModels
             return new SchoolMaster
             {
                 Id = schoolMasterViewModel.Id,
-                SchoolName = schoolMasterViewModel.Name,
+                SchoolName = schoolMasterViewModel.ShoolName,
                 HouseNumber = schoolMasterViewModel.Street,
                 Street = schoolMasterViewModel.Street,
                 Area = schoolMasterViewModel.Area,
