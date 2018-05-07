@@ -34,7 +34,7 @@ namespace SchoolService_Master.Controllers
                           select new SchoolMasterViewModel()
                           {
                               Id = b.Id,
-                              ShoolName = b.SchoolName,
+                              SchoolName = b.SchoolName,
                               HouseNumber = b.HouseNumber,
                               Street = b.Street,
                               Area = b.Area,
@@ -135,7 +135,7 @@ namespace SchoolService_Master.Controllers
                              BranchId = branch.Id,
                              StateId = schoolMasterViewModel.StateId,
                              SchoolType = schoolMasterViewModel.SchoolType,
-                             ShoolName = schoolMasterViewModel.ShoolName,
+                             SchoolName = schoolMasterViewModel.SchoolName,
                              HouseNumber = schoolMasterViewModel.HouseNumber,
                              Street = schoolMasterViewModel.Street,
                              Area = schoolMasterViewModel.Area,
@@ -157,7 +157,7 @@ namespace SchoolService_Master.Controllers
             schoolMaster.BranchId = schoolMasterViewModel.BranchId;
             schoolMaster.StateId = schoolMasterViewModel.StateId;
             schoolMaster.SchoolType = schoolMasterViewModel.SchoolType;
-            schoolMaster.SchoolName = schoolMasterViewModel.ShoolName;
+            schoolMaster.SchoolName = schoolMasterViewModel.SchoolName;
             schoolMaster.HouseNumber = schoolMasterViewModel.HouseNumber;
             schoolMaster.Street = schoolMasterViewModel.Street;
             schoolMaster.Area = schoolMasterViewModel.Area;

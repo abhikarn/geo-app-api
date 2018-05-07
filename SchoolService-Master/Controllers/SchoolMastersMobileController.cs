@@ -32,7 +32,7 @@ namespace SchoolService_Master.Controllers
                           select new SchoolMasterViewModel()
                           {
                               Id = b.Id,
-                              ShoolName = b.SchoolName,
+                              SchoolName = b.SchoolName,
                               HouseNumber = b.HouseNumber,
                               Street = b.Street,
                               Area = b.Area,

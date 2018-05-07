@@ -9,7 +9,7 @@ namespace SchoolService_Master.ViewModels
     public class SchoolMasterViewModel
     {
         public int Id { get; set; }
-        public string ShoolName { get; set; }
+        public string SchoolName { get; set; }
         public string HouseNumber { get; set; }
         public string Street { get; set; }
         public string Area { get; set; }
@@ -51,7 +51,7 @@ namespace SchoolService_Master.ViewModels
             return new SchoolMasterViewModel
             {
                 Id = schoolMaster.Id,
-                ShoolName = schoolMaster.SchoolName,
+                SchoolName = schoolMaster.SchoolName,
                 HouseNumber = schoolMaster.Street,
                 Street = schoolMaster.SchoolName,
                 Area = schoolMaster.Area,
@@ -83,7 +83,7 @@ namespace SchoolService_Master.ViewModels
             return new SchoolMaster
             {
                 Id = schoolMasterViewModel.Id,
-                SchoolName = schoolMasterViewModel.ShoolName,
+                SchoolName = schoolMasterViewModel.SchoolName,
                 HouseNumber = schoolMasterViewModel.Street,
                 Street = schoolMasterViewModel.Street,
                 Area = schoolMasterViewModel.Area,
