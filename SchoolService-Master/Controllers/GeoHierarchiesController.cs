@@ -46,6 +46,8 @@ namespace SchoolService_Master.Controllers
                                      MarketingHierarchyUserId = GH.MarketingHierarchyUserId,
                                      MarketingHierarchyUserName = MAR.FirstName + " " + MAR.LastName
                                  };
+
+
             return geohierarchies;
         }
 

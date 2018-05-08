@@ -7,7 +7,7 @@ namespace SchoolService_Master.ViewModels
 {
     public class SchoolMasterMultiSelect
     {
-        public string Label { get; set; }
-        public SchoolMasterViewModel Value { get; set; }
+        public string name { get; set; }
+        public int code { get; set; }
     }
 }
