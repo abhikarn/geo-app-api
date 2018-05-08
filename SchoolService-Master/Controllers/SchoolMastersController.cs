@@ -50,6 +50,9 @@ namespace SchoolService_Master.Controllers
                               TotalPopulation = b.TotalPopulation,
                               TotalEducationlevel = b.TotalEducationlevel,
                               NursaryToPrimary3Population = b.NursaryToPrimary3Population,
+                              Approved = b.Approved,
+                              Source = b.Source,
+                              Status = b.Status
                           };
 
             return schools;
@@ -148,6 +151,9 @@ namespace SchoolService_Master.Controllers
                              TotalPopulation = schoolMasterViewModel.TotalPopulation,
                              TotalEducationlevel = schoolMasterViewModel.TotalEducationlevel,
                              NursaryToPrimary3Population = schoolMasterViewModel.NursaryToPrimary3Population,
+                             Approved = schoolMasterViewModel.Approved,
+                             Source = schoolMasterViewModel.Source,
+                             Status = schoolMasterViewModel.Status
                          };
             var schoolModel = school.FirstOrDefault();
             SchoolMaster schoolMaster = new SchoolMaster();
@@ -170,6 +176,9 @@ namespace SchoolService_Master.Controllers
             schoolMaster.TotalPopulation = schoolMasterViewModel.TotalPopulation;
             schoolMaster.TotalEducationlevel = schoolMasterViewModel.TotalEducationlevel;
             schoolMaster.NursaryToPrimary3Population = schoolMasterViewModel.NursaryToPrimary3Population;
+            schoolMaster.Approved = schoolMasterViewModel.Approved;
+            schoolMaster.Source = schoolMasterViewModel.Source;
+            schoolMaster.Status = schoolMasterViewModel.Status;
             schoolMaster.Created = DateTime.Now;
             schoolMaster.Updated = DateTime.Now;
             if (schoolMaster.Id > 0)

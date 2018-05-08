@@ -48,6 +48,9 @@ namespace SchoolService_Master.Controllers
                               TotalPopulation = b.TotalPopulation,
                               TotalEducationlevel = b.TotalEducationlevel,
                               NursaryToPrimary3Population = b.NursaryToPrimary3Population,
+                              Approved = b.Approved,
+                              Source = b.Source,
+                              Status = b.Status
                           };
 
             return schools;
