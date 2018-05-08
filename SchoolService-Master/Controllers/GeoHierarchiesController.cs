@@ -52,17 +52,19 @@ namespace SchoolService_Master.Controllers
         }
 
         // GET: api/GeoHierarchies/5
-        [ResponseType(typeof(GeoHierarchyViewModel))]
+        [ResponseType(typeof(GeoHierarchy))]
         public async Task<IHttpActionResult> GetGeoHierarchy(int id)
         {
-            GeoHierarchyViewModel geoHierarchy = await db.GeoHierarchies.FindAsync(id);
+            var geoHierarchy = await db.GeoHierarchies.FindAsync(id);
+            GeoHierarchyViewModel geoHierarchyViewModel = new GeoHierarchyViewModel();
+            geoHierarchyViewModel = geoHierarchy;
             if (geoHierarchy == null)
             {
                 return NotFound();
             }
             List<SchoolGeoHierarchyMapping> schoolGeoHierarchyMapping = await db.SchoolGeoHierarchyMapping
                                                                                 .Where(x => x.GeoHierarchyId == id).ToListAsync();
-            geoHierarchy.SchoolGeoHierarchyMappingViewModels = schoolGeoHierarchyMapping
+            geoHierarchyViewModel.SchoolGeoHierarchyMappingViewModels = schoolGeoHierarchyMapping
                                                                 .Select<SchoolGeoHierarchyMapping, SchoolGeoHierarchyMappingViewModel>(x => x).ToList();
 
 
