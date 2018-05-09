@@ -25,7 +25,7 @@ namespace SchoolService_Master.Controllers
                          select new StateMasterViewModel()
                          {
                              Id = s.Id,
-                             Name = s.StateName
+                             Name = s.Name
                          };
             return states;
         }
@@ -40,9 +40,9 @@ namespace SchoolService_Master.Controllers
                               select new StateMasterViewModel()
                               {
                                   Id = b.Id,
-                                  Name = b.StateName,
+                                  Name = b.Name,
                                   BranchId = b.BranchId,
-                                  BranchName = br.BranchName
+                                  BranchName = br.Name
                               };
 
             if (stateMaster == null)

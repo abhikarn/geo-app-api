@@ -25,7 +25,7 @@ namespace SchoolService_Master.Controllers
                               select new SupervisorMasterViewModel()
                               {
                                   Id = b.Id,
-                                  Name = b.SupervisorName
+                                  Name = b.Name
                               };
 
             return supervisors;

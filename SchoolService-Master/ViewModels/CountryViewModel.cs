@@ -13,22 +13,22 @@ namespace SchoolService_Master.ViewModels
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
 
-        public static implicit operator CountryMasterViewModel(CountryMaster countryMaster)
-        {
-            return new CountryMasterViewModel
-            {
-                Id = countryMaster.Id,
-                Name = countryMaster.CountryrName
-            };
-        }
+        //public static implicit operator CountryMasterViewModel(CountryMaster countryMaster)
+        //{
+        //    return new CountryMasterViewModel
+        //    {
+        //        Id = countryMaster.Id,
+        //        Name = countryMaster.CountryrName
+        //    };
+        //}
 
-        public static implicit operator CountryMaster(CountryMasterViewModel countryMasterViewModel)
-        {
-            return new CountryMaster
-            {
-                Id = countryMasterViewModel.Id,
-                CountryrName = countryMasterViewModel.Name
-            };
-        }
+        //public static implicit operator CountryMaster(CountryMasterViewModel countryMasterViewModel)
+        //{
+        //    return new CountryMaster
+        //    {
+        //        Id = countryMasterViewModel.Id,
+        //        CountryrName = countryMasterViewModel.Name
+        //    };
+        //}
     }
 }

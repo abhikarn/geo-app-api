@@ -46,9 +46,9 @@ namespace SchoolService_Master.Controllers
                             RoleName = role.Name,
                             Status = user.Status,
                             CountryId = user.CountryId,
-                            CountryName = country.CountryrName,
+                            CountryName = country.Name,
                             StateId = user.StateId,
-                            StateName = state.StateName,
+                            StateName = state.Name,
                             //CityId = user.CityId,
                             //CityName = city.CityName
                         };
@@ -80,9 +80,9 @@ namespace SchoolService_Master.Controllers
                             RoleName = roles.Name,
                             Status = user.Status,
                             CountryId = user.CountryId,
-                            CountryName = country.CountryrName,
+                            CountryName = country.Name,
                             StateId = user.StateId,
-                            StateName = state.StateName
+                            StateName = state.Name
                         };
             if (countryId > 0)
                 users = users.Where(x => x.CountryId == countryId);

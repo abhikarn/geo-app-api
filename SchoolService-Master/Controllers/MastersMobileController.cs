@@ -21,26 +21,14 @@ namespace SchoolService_Master.Controllers
         public Masters GetMasters(int countryId, int stateId, int cityId)
         {
             Masters masters = new Masters();
-            List<CountryMaster> countryMaster = db.Countries.ToList();
-            //List<ZoneMaster> zoneMaster= db.Zones.ToList();
-            //List<BranchMaster> branchMaster = db.Branches.ToList();
-            List<StateMaster> stateMaster = db.States.ToList();
-            //List<SupervisorMaster> supervisorMaster = db.Supervisors.ToList();
-            //List<CityMaster> cityMaster= db.City.ToList();
             List<Role> role = db.Roles.ToList();
             //List<SchoolMaster> LstShoolMaster = db.Schools.ToList();
             List<SchoolMasterViewModel> LstShoolMaster = (new SchoolMastersController().GetSchools()).ToList();
-            masters.CountryMaster = countryMaster.Select<CountryMaster, CountryMasterViewModel>(x => x).OrderBy(x => x.Name).ToList();
-            masters.RoleMaster = role.Select<Role, RoleMasterViewModel>(x => x).OrderBy(x => x.Name).ToList();
-            //masters.ZoneMaster = zoneMaster.Select<ZoneMaster, ZoneMasterViewModel>(x => x).ToList();
-            //masters.BranchMaster = branchMaster.Select<BranchMaster, BranchMasterViewModel>(x => x).ToList();
-            masters.StateMaster = stateMaster.Select<StateMaster, StateMasterViewModel>(x => x).OrderBy(x => x.Name).ToList();
-            //masters.SupervisorMaster = supervisorMaster.Select<SupervisorMaster, SupervisorMasterViewModel>(x => x).ToList();
-            //masters.CityNewMaster = cityMaster.Select<CityMaster, CityViewModel>(x => x).ToList();
-
-            masters.ZoneMaster = new List<ZoneMasterViewModel> { new ZoneMasterViewModel() };
-            masters.BranchMaster = new List<BranchMasterViewModel> { new BranchMasterViewModel() };
-            masters.SupervisorMaster = new List<SupervisorMasterViewModel> { new SupervisorMasterViewModel() };
+            masters.CountryMaster = db.Countries.ToList();
+            masters.RoleMaster = db.Roles.ToList();
+            masters.ZoneMaster = db.Zones.ToList();
+            masters.BranchMaster = db.Branches.ToList();
+            masters.StateMaster = db.States.ToList();
             masters.CityNewMaster = new List<CityViewModel> { new CityViewModel() };
 
             List<SchoolMasterMultiSelect> LstSchoolMasterMultiSelect = new List<SchoolMasterMultiSelect>();

@@ -15,24 +15,24 @@ namespace SchoolService_Master.ViewModels
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
 
-        public static implicit operator ZoneMasterViewModel(ZoneMaster zoneMaster)
-        {
-            return new ZoneMasterViewModel
-            {
-                Id = zoneMaster.Id,
-                Name = zoneMaster.ZoneName,
-                CountryId = zoneMaster.CountryId
-            };
-        }
+        //public static implicit operator ZoneMasterViewModel(ZoneMaster zoneMaster)
+        //{
+        //    return new ZoneMasterViewModel
+        //    {
+        //        Id = zoneMaster.Id,
+        //        Name = zoneMaster.ZoneName,
+        //        CountryId = zoneMaster.CountryId
+        //    };
+        //}
 
-        public static implicit operator ZoneMaster(ZoneMasterViewModel zoneMasterViewModel)
-        {
-            return new ZoneMaster
-            {
-                Id = zoneMasterViewModel.Id,
-                ZoneName = zoneMasterViewModel.Name,
-                CountryId = zoneMasterViewModel.CountryId
-            };
-        }
+        //public static implicit operator ZoneMaster(ZoneMasterViewModel zoneMasterViewModel)
+        //{
+        //    return new ZoneMaster
+        //    {
+        //        Id = zoneMasterViewModel.Id,
+        //        ZoneName = zoneMasterViewModel.Name,
+        //        CountryId = zoneMasterViewModel.CountryId
+        //    };
+        //}
     }
 }

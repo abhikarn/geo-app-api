@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using SchoolService_Master.Models;
 
 namespace SchoolService_Master.ViewModels
 {
     public class Masters
     {
-        public IList<CountryMasterViewModel> CountryMaster { get; set; }
-        public IList<ZoneMasterViewModel> ZoneMaster { get; set; }
-        public IList<BranchMasterViewModel> BranchMaster { get; set; }
-        public IList<StateMasterViewModel> StateMaster { get; set; }
-        public IList<SupervisorMasterViewModel> SupervisorMaster { get; set; }
+        public IList<CountryMaster> CountryMaster { get; set; }
+        public IList<ZoneMaster> ZoneMaster { get; set; }
+        public IList<BranchMaster> BranchMaster { get; set; }
+        public IList<StateMaster> StateMaster { get; set; }
+        public IList<SupervisorMaster> SupervisorMaster { get; set; }
         public IList<CityViewModel> CityNewMaster { get; set; }
-        public IList<RoleMasterViewModel> RoleMaster { get; set; }
+        public IList<Role> RoleMaster { get; set; }
         public IList<SchoolMasterMultiSelect> SchoolMaster { get; set; }
     }
 }

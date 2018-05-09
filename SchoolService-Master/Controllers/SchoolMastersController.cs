@@ -41,7 +41,7 @@ namespace SchoolService_Master.Controllers
                               LGA = b.LGA,
                               LandMark = b.LandMark,
                               StateId = b.StateId,
-                              StateName = s.StateName,
+                              StateName = s.Name,
                               GeoCoordinate = b.GeoCoordinate,
                               PrincipalName = b.PrincipalName,
                               PhoneNumber = b.PhoneNumber,

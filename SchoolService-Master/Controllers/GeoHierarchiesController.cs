@@ -34,17 +34,17 @@ namespace SchoolService_Master.Controllers
                                  {
                                      Id = GH.Id,
                                      CountryId = GH.CountryId,
-                                     CountryName = COU.CountryrName,
+                                     CountryName = COU.Name,
                                      StateId = GH.StateId,
-                                     StateName = STA.StateName,
+                                     StateName = STA.Name,
                                      ZoneId = GH.ZoneId,
-                                     ZoneName = ZON.ZoneName,
+                                     ZoneName = ZON.Name,
                                      BranchId = GH.BranchId,
-                                     BranchName = BRA.BranchName,
+                                     BranchName = BRA.Name,
                                      SupervisorId = GH.SupervisorId,
-                                     SupervisorName = SUP.FirstName + " " + SUP.LastName,
+                                     SupervisorName = (SUP.FirstName + " " + SUP.LastName),
                                      MarketingHierarchyUserId = GH.MarketingHierarchyUserId,
-                                     MarketingHierarchyUserName = MAR.FirstName + " " + MAR.LastName
+                                     MarketingHierarchyUserName = (MAR.FirstName + " " + MAR.LastName)
                                  };
 
 
@@ -53,22 +53,48 @@ namespace SchoolService_Master.Controllers
 
         // GET: api/GeoHierarchies/5
         [ResponseType(typeof(GeoHierarchy))]
-        public async Task<IHttpActionResult> GetGeoHierarchy(int id)
+        public IHttpActionResult GetGeoHierarchy(int id)
         {
-            var geoHierarchy = await db.GeoHierarchies.FindAsync(id);
             GeoHierarchyViewModel geoHierarchyViewModel = new GeoHierarchyViewModel();
-            geoHierarchyViewModel = geoHierarchy;
-            if (geoHierarchy == null)
+            var geohierarchies = from GH in db.GeoHierarchies
+                                 join COU in db.Countries on GH.CountryId equals COU.Id
+                                 join STA in db.States on GH.StateId equals STA.Id
+                                 join ZON in db.Zones on GH.ZoneId equals ZON.Id
+                                 join BRA in db.Branches on GH.BranchId equals BRA.Id
+                                 join SUP in db.Users on GH.SupervisorId equals SUP.Id
+                                 join MAR in db.Users on GH.SupervisorId equals MAR.Id
+                                 select new GeoHierarchyViewModel
+                                 {
+                                     Id = GH.Id,
+                                     CountryId = GH.CountryId,
+                                     CountryName = COU.Name,
+                                     StateId = GH.StateId,
+                                     StateName = STA.Name,
+                                     ZoneId = GH.ZoneId,
+                                     ZoneName = ZON.Name,
+                                     BranchId = GH.BranchId,
+                                     BranchName = BRA.Name,
+                                     SupervisorId = GH.SupervisorId,
+                                     SupervisorName = SUP.FirstName + " " + SUP.LastName,
+                                     MarketingHierarchyUserId = GH.MarketingHierarchyUserId,
+                                     MarketingHierarchyUserName = MAR.FirstName + " " + MAR.LastName
+                                 };
+            if (geohierarchies == null)
             {
                 return NotFound();
             }
-            List<SchoolGeoHierarchyMapping> schoolGeoHierarchyMapping = await db.SchoolGeoHierarchyMapping
-                                                                                .Where(x => x.GeoHierarchyId == id).ToListAsync();
-            geoHierarchyViewModel.SchoolGeoHierarchyMappingViewModels = schoolGeoHierarchyMapping
-                                                                .Select<SchoolGeoHierarchyMapping, SchoolGeoHierarchyMappingViewModel>(x => x).ToList();
+            geoHierarchyViewModel = geohierarchies.FirstOrDefault();
+            var schoolGeoHierarchyMapping = from S in db.Schools
+                                            join SGM in db.SchoolGeoHierarchyMapping on S.Id equals SGM.SchoolId
+                                            where SGM.GeoHierarchyId == id
+                                            select new SchoolGeoHierarchyMappingViewModel
+                                            {
+                                                Name = S.SchoolName,
+                                                Code = SGM.SchoolId.ToString()
+                                            };
 
-
-            return Ok(geoHierarchy);
+            geoHierarchyViewModel.SchoolGeoHierarchyMappingViewModels = schoolGeoHierarchyMapping.ToList();
+            return Ok(geoHierarchyViewModel);
         }
 
         public IHttpActionResult PutGeoHierarchy(GeoHierarchyViewModel geoHierarchyViewModel)
@@ -182,5 +208,6 @@ namespace SchoolService_Master.Controllers
         {
             return db.GeoHierarchies.Count(e => e.Id == id) > 0;
         }
+
     }
 }

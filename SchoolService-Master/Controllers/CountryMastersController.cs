@@ -25,7 +25,7 @@ namespace SchoolService_Master.Controllers
                             select new CountryMasterViewModel()
                           {
                               Id = b.Id,
-                              Name=b.CountryrName
+                              Name=b.Name
                           };
 
             return countries;

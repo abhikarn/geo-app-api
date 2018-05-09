@@ -14,25 +14,25 @@ namespace SchoolService_Master.ViewModels
         public string ZoneName { get; set; }
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
-        public static implicit operator BranchMasterViewModel(BranchMaster branchMaster)
-        {
-            return new BranchMasterViewModel
-            {
-                Id = branchMaster.Id,
-                Name = branchMaster.BranchName,
-                ZoneId = branchMaster.ZoneId
-            };
-        }
+        //public static implicit operator BranchMasterViewModel(BranchMaster branchMaster)
+        //{
+        //    return new BranchMasterViewModel
+        //    {
+        //        Id = branchMaster.Id,
+        //        Name = branchMaster.BranchName,
+        //        ZoneId = branchMaster.ZoneId
+        //    };
+        //}
 
-        public static implicit operator BranchMaster(BranchMasterViewModel branchMasterViewModel)
-        {
-            return new BranchMaster
-            {
-                Id = branchMasterViewModel.Id,
-                BranchName = branchMasterViewModel.Name,
-                ZoneId = branchMasterViewModel.ZoneId
-            };
-        }
+        //public static implicit operator BranchMaster(BranchMasterViewModel branchMasterViewModel)
+        //{
+        //    return new BranchMaster
+        //    {
+        //        Id = branchMasterViewModel.Id,
+        //        BranchName = branchMasterViewModel.Name,
+        //        ZoneId = branchMasterViewModel.ZoneId
+        //    };
+        //}
 
     }
 }

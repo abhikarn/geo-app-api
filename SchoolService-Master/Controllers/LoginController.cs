@@ -41,9 +41,9 @@ namespace SchoolService_Master.Controllers
                             RoleName = role.Name,
                             Status = user.Status,
                             CountryId = user.CountryId,
-                            CountryName = country.CountryrName,
+                            CountryName = country.Name,
                             StateId = user.StateId,
-                            StateName = state.StateName,
+                            StateName = state.Name,
                             //CityId = user.CityId,
                             //CityName = city.CityName
                         };
