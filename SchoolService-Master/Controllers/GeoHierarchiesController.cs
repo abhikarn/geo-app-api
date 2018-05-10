@@ -117,7 +117,7 @@ namespace SchoolService_Master.Controllers
                     lstSchoolGeoHierarchyMapping.Clear();
                     foreach (SchoolGeoHierarchyMappingViewModel item in geoHierarchyViewModel.SchoolGeoHierarchyMappingViewModels)
                     {
-                        lstSchoolGeoHierarchyMapping.Add(new SchoolGeoHierarchyMapping { SchoolId = item.Id, GeoHierarchyId = geoHierarchyViewModel.Id });
+                        lstSchoolGeoHierarchyMapping.Add(new SchoolGeoHierarchyMapping { SchoolId = Convert.ToInt32(item.Code), GeoHierarchyId = geoHierarchyViewModel.Id });
                     }
                     db.SchoolGeoHierarchyMapping.AddRange(lstSchoolGeoHierarchyMapping);
                     db.SaveChanges();
@@ -162,7 +162,7 @@ namespace SchoolService_Master.Controllers
                     List<SchoolGeoHierarchyMapping> lstSchoolGeoHierarchyMapping = new List<SchoolGeoHierarchyMapping>();
                     foreach (SchoolGeoHierarchyMappingViewModel item in geoHierarchyViewModel.SchoolGeoHierarchyMappingViewModels)
                     {
-                        lstSchoolGeoHierarchyMapping.Add(new SchoolGeoHierarchyMapping { SchoolId = item.Id, GeoHierarchyId = geoHierarchy.Id });
+                        lstSchoolGeoHierarchyMapping.Add(new SchoolGeoHierarchyMapping { SchoolId = Convert.ToInt32(item.Code), GeoHierarchyId = geoHierarchy.Id });
                     }
                     db.SchoolGeoHierarchyMapping.AddRange(lstSchoolGeoHierarchyMapping);
                     await db.SaveChangesAsync();

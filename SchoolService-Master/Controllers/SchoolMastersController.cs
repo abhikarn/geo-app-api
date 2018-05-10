@@ -20,7 +20,6 @@ namespace SchoolService_Master.Controllers
     public class SchoolMastersController : ApiController
     {
         private SchoolServiceContext db = new SchoolServiceContext();
-        IQueryable<SchoolMaster> schools;
 
 
         //[Route("webapi/SchoolMasters/{countryId}/{stateId}/{cityId}")]
@@ -58,35 +57,6 @@ namespace SchoolService_Master.Controllers
             return schools;
         }
 
-        // GET: api/SchoolMasters/5
-        //[ResponseType(typeof(SchoolMasterViewModel))]
-        //public IHttpActionResult GetSchoolMaster()
-        //{
-        //    var schools = from b in db.Schools
-        //                  join s in db.States on b.StateId equals s.Id
-        //                  orderby b.SchoolName
-        //                  select new SchoolMasterViewModel()
-        //                  {
-        //                      Id = b.Id,
-        //                      Name = b.SchoolName,
-        //                      HouseNumber = b.HouseNumber,
-        //                      Street = b.Street,
-        //                      Area = b.Area,
-        //                      LGA = b.LGA,
-        //                      LandMark = b.LandMark,
-        //                      StateId = b.StateId,
-        //                      StateName = s.StateName,
-        //                      GeoCoordinate = b.GeoCoordinate,
-        //                      PrincipalName = b.PrincipalName,
-        //                      PhoneNumber = b.PhoneNumber,
-        //                      SchoolPhoneNumber = b.SchoolPhoneNumber,
-        //                      SchoolType = b.SchoolType,
-        //                      TotalPopulation = b.TotalPopulation,
-        //                      TotalEducationlevel = b.TotalEducationlevel,
-        //                      NursaryToPrimary3Population = b.NursaryToPrimary3Population,
-        //                  };
-        //    return Ok(schools);
-        //}
 
         public IHttpActionResult PutSchoolMaster(SchoolMaster schoolMaster)
         {
@@ -120,7 +90,7 @@ namespace SchoolService_Master.Controllers
         [ResponseType(typeof(SchoolMasterViewModel))]
         public async Task<IHttpActionResult> PostSchoolMaster(SchoolMasterViewModel schoolMasterViewModel)
         {
-            
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
