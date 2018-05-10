@@ -26,7 +26,7 @@ namespace SchoolService_Master.Controllers
         public IQueryable<SchoolMasterViewModel> GetSchools()
         {
             var schools = from b in db.Schools
-                          join s in db.States on b.StateId equals s.Id
+                          //join s in db.States on b.StateId equals s.Id
                           //where b.StateId == stateId
                           orderby b.SchoolName
                           select new SchoolMasterViewModel()
@@ -39,7 +39,7 @@ namespace SchoolService_Master.Controllers
                               LGA = b.LGA,
                               LandMark = b.LandMark,
                               StateId = b.StateId,
-                              StateName = s.Name,
+                              //StateName = s.Name,
                               GeoCoordinate = b.GeoCoordinate,
                               PrincipalName = b.PrincipalName,
                               PhoneNumber = b.PhoneNumber,
@@ -125,7 +125,7 @@ namespace SchoolService_Master.Controllers
         [ResponseType(typeof(SchoolMaster))]
         public async Task<IHttpActionResult> PostSchoolMaster(SchoolMaster[] schoolMasters)
         {
-
+            List<SchoolMaster> schoolMasterLst = new List<SchoolMaster>();
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -161,6 +161,7 @@ namespace SchoolService_Master.Controllers
                 {
                     db.Schools.Add(schoolMaster);
                     await db.SaveChangesAsync();
+                    schoolMasterLst.Add(schoolMaster);
                 }
                 catch (Exception ex)
                 {
@@ -168,7 +169,7 @@ namespace SchoolService_Master.Controllers
                 }
             }
 
-            return Ok();
+            return Ok(schoolMasterLst);
             //return CreatedAtRoute("DefaultApi", new { id = schoolMaster.Id }, schoolMaster);
         }
 

@@ -23,11 +23,11 @@ namespace SchoolService_Master.Controllers
             List<Role> role = db.Roles.ToList();
             //List<SchoolMaster> LstShoolMaster = db.Schools.ToList();
             List<SchoolMasterViewModel> LstShoolMaster = (new SchoolMastersController().GetSchools()).ToList();
-            masters.CountryMaster = db.Countries.ToList();
-            masters.RoleMaster = db.Roles.ToList();
-            masters.ZoneMaster = db.Zones.ToList();
-            masters.BranchMaster = db.Branches.ToList();
-            masters.StateMaster = db.States.ToList();
+            masters.CountryMaster = db.Countries.OrderBy(x => x.Id).ToList();
+            masters.RoleMaster = db.Roles.OrderBy(x => x.Id).ToList();
+            masters.ZoneMaster = db.Zones.OrderBy(x => x.Id).ToList();
+            masters.BranchMaster = db.Branches.OrderBy(x => x.Id).ToList();
+            masters.StateMaster = db.States.OrderBy(x => x.Id).ToList();
             masters.CityNewMaster = new List<CityViewModel> { new CityViewModel() };
 
             List<SchoolMasterMultiSelect> LstSchoolMasterMultiSelect = new List<SchoolMasterMultiSelect>();
