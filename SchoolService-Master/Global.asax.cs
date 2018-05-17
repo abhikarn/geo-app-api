@@ -15,11 +15,11 @@ namespace SchoolService_Master
     {
         protected void Application_Start()
         {
-            System.Data.Entity.Database.SetInitializer(new DropCreateDatabaseIfModelChanges<SchoolServiceContext>());
-            using (var context = new SchoolServiceContext())
-            {
-                context.Database.Initialize(force: true);
-            }
+            //System.Data.Entity.Database.SetInitializer(new DropCreateDatabaseIfModelChanges<SchoolServiceContext>());
+            //using (var context = new SchoolServiceContext())
+            //{
+            //    context.Database.Initialize(force: true);
+            //}
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
