@@ -40,6 +40,10 @@ namespace SchoolService_Master.Models
         /// 
         /// </summary>
         public Nullable<System.DateTime> LastLoginDate { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime DateOfBirth { get; set; }
 
         /// <summary>
         /// 

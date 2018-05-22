@@ -39,6 +39,7 @@ namespace SchoolService_Master.Controllers
                             UserPassword = user.UserPassword,
                             IsActive = user.IsActive,
                             LastLoginDate = user.LastLoginDate,
+                            DateOfBirth = user.DateOfBirth,
                             FirstName = user.FirstName,
                             LastName = user.LastName,
                             Name = user.FirstName + " " + user.LastName,
@@ -73,6 +74,7 @@ namespace SchoolService_Master.Controllers
                             UserPassword = user.UserPassword,
                             IsActive = user.IsActive,
                             LastLoginDate = user.LastLoginDate,
+                            DateOfBirth = user.DateOfBirth,
                             FirstName = user.FirstName,
                             LastName = user.LastName,
                             Name = user.FirstName + " " + user.LastName,
@@ -146,6 +148,7 @@ namespace SchoolService_Master.Controllers
                             UserPassword = userViewModel.UserPassword,
                             IsActive = userViewModel.IsActive,
                             LastLoginDate = userViewModel.LastLoginDate,
+                            DateOfBirth = userViewModel.DateOfBirth,
                             FirstName = userViewModel.FirstName,
                             LastName = userViewModel.LastName,
                             RoleId = userViewModel.RoleId,
@@ -164,6 +167,7 @@ namespace SchoolService_Master.Controllers
                 UserPassword = userModel.UserPassword,
                 IsActive = userModel.IsActive,
                 LastLoginDate = userModel.LastLoginDate,
+                DateOfBirth = userModel.DateOfBirth,
                 FirstName = userModel.FirstName,
                 LastName = userModel.LastName,
                 RoleId = userModel.RoleId,
@@ -198,6 +202,33 @@ namespace SchoolService_Master.Controllers
             await db.SaveChangesAsync();
 
             return Ok(users);
+        }
+
+        // GET: webapi/Token comment
+        [HttpPost]
+        [ResponseType(typeof(Users))]
+        [Route("webapi/ResetPassword")]
+        public IHttpActionResult ResetPassword(Users users)
+        {
+            db.Entry(users).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UsersExists(users.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         protected override void Dispose(bool disposing)

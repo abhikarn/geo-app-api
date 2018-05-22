@@ -206,6 +206,10 @@
     <Compile Include="Controllers\MastersMobileController.cs" />
     <Compile Include="Controllers\SchoolMastersController.cs" />
     <Compile Include="Controllers\SchoolMastersMobileController.cs" />
+    <Compile Include="Migrations\201805181642124_InitialCreate.cs" />
+    <Compile Include="Migrations\201805181642124_InitialCreate.Designer.cs">
+      <DependentUpon>201805181642124_InitialCreate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\RefreshToken.cs" />
     <Compile Include="Provider\ClientIdAuthorizationProvider.cs" />
@@ -302,6 +306,11 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201805181642124_InitialCreate.resx">
+      <DependentUpon>201805181642124_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
