@@ -80,5 +80,6 @@ namespace SchoolService_Master.Models
         public int CityId { get; set; }
         public int ZoneId { get; set; }
         public int BranchId { get; set; }
+        public bool NotFirstLogin { get; set; }
     }
 }

@@ -32,6 +32,7 @@ namespace SchoolService_Master.ViewModels
         public int BranchId { get; set; }
         public string BranchName { get; set; }
         public string authToken { get; set; }
+        public bool NotFirstLogin { get; set; }
 
         public static implicit operator UserViewModel(Users user)
         {

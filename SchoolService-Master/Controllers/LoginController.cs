@@ -47,6 +47,7 @@ namespace SchoolService_Master.Controllers
                             CountryName = country.Name,
                             StateId = user.StateId,
                             StateName = state.Name,
+                            NotFirstLogin = user.NotFirstLogin
                             //CityId = user.CityId,
                             //CityName = city.CityName
                         };
@@ -55,7 +56,7 @@ namespace SchoolService_Master.Controllers
                 return NotFound();
             }
             UserViewModel UserViewModelNew = users.FirstOrDefault();
-            UpdateUserLastLogin(UserViewModelNew);
+            //UpdateNotFirstLogin(UserViewModelNew);
             //var ticket = new FormsAuthenticationTicket(1, userViewModel.UserName, DateTime.Now,
             //                                                       DateTime.Now.AddMinutes(60), true, "",
             //                                                       FormsAuthentication.FormsCookiePath);
@@ -75,7 +76,7 @@ namespace SchoolService_Master.Controllers
             return Ok(AccessToken);
         }
 
-        private void UpdateUserLastLogin(UserViewModel UserViewModelNew)
+        private void UpdateNotFirstLogin(UserViewModel UserViewModelNew)
         {
             Users userModel = new Users
             {
@@ -84,7 +85,7 @@ namespace SchoolService_Master.Controllers
                 EmailId = UserViewModelNew.EmailId,
                 UserPassword = UserViewModelNew.UserPassword,
                 IsActive = UserViewModelNew.IsActive,
-                LastLoginDate = DateTime.Now,
+                NotFirstLogin = false,
                 DateOfBirth = UserViewModelNew.DateOfBirth,
                 FirstName = UserViewModelNew.FirstName,
                 LastName = UserViewModelNew.LastName,

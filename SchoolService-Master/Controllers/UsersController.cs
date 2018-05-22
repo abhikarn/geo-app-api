@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.Description;
+using SchoolService_Master.Common;
 using SchoolService_Master.Models;
 using SchoolService_Master.Provider;
 using SchoolService_Master.ViewModels;
@@ -50,6 +51,7 @@ namespace SchoolService_Master.Controllers
                             CountryName = country.Name,
                             StateId = user.StateId,
                             StateName = state.Name,
+                            NotFirstLogin = user.NotFirstLogin
                             //CityId = user.CityId,
                             //CityName = city.CityName
                         };
@@ -74,7 +76,7 @@ namespace SchoolService_Master.Controllers
                             UserPassword = user.UserPassword,
                             IsActive = user.IsActive,
                             LastLoginDate = user.LastLoginDate,
-                            DateOfBirth = user.DateOfBirth,
+                            DateOfBirth =  user.DateOfBirth,
                             FirstName = user.FirstName,
                             LastName = user.LastName,
                             Name = user.FirstName + " " + user.LastName,
@@ -84,7 +86,8 @@ namespace SchoolService_Master.Controllers
                             CountryId = user.CountryId,
                             CountryName = country.Name,
                             StateId = user.StateId,
-                            StateName = state.Name
+                            StateName = state.Name,
+                            NotFirstLogin = user.NotFirstLogin
                         };
             if (countryId > 0)
                 users = users.Where(x => x.CountryId == countryId);
@@ -156,7 +159,8 @@ namespace SchoolService_Master.Controllers
                             CountryId = country.Id,
                             ZoneId = zone.Id,
                             BranchId = branch.Id,
-                            StateId = userViewModel.StateId
+                            StateId = userViewModel.StateId,
+                            NotFirstLogin = userViewModel.NotFirstLogin
                         };
             UserViewModel userModel = users.FirstOrDefault();
             Users user = new Users
@@ -175,7 +179,8 @@ namespace SchoolService_Master.Controllers
                 CountryId = userModel.CountryId,
                 ZoneId = userModel.ZoneId,
                 BranchId = userModel.BranchId,
-                StateId = userViewModel.StateId
+                StateId = userViewModel.StateId,
+                NotFirstLogin = userViewModel.NotFirstLogin
             };
             if (userViewModel.Id > 0)
             {
