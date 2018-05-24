@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.SqlServer;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -40,7 +41,7 @@ namespace SchoolService_Master.Controllers
                             UserPassword = user.UserPassword,
                             IsActive = user.IsActive,
                             LastLoginDate = user.LastLoginDate,
-                            DateOfBirth = user.DateOfBirth,
+                            DateOfBirth = SqlFunctions.DateName("month", user.DateOfBirth) + "/" + SqlFunctions.DateName("day", user.DateOfBirth) + "/" + SqlFunctions.DateName("year", user.DateOfBirth),
                             FirstName = user.FirstName,
                             LastName = user.LastName,
                             Name = user.FirstName + " " + user.LastName,
@@ -76,7 +77,7 @@ namespace SchoolService_Master.Controllers
                             UserPassword = user.UserPassword,
                             IsActive = user.IsActive,
                             LastLoginDate = user.LastLoginDate,
-                            DateOfBirth =  user.DateOfBirth,
+                            DateOfBirth = SqlFunctions.DateName("month", user.DateOfBirth) + "/" + SqlFunctions.DateName("day", user.DateOfBirth) + "/" + SqlFunctions.DateName("year", user.DateOfBirth),
                             FirstName = user.FirstName,
                             LastName = user.LastName,
                             Name = user.FirstName + " " + user.LastName,
@@ -151,7 +152,7 @@ namespace SchoolService_Master.Controllers
                             UserPassword = userViewModel.UserPassword,
                             IsActive = userViewModel.IsActive,
                             LastLoginDate = userViewModel.LastLoginDate,
-                            DateOfBirth = userViewModel.DateOfBirth,
+                            DateOfBirth = userViewModel.DateOfBirth,//SqlFunctions.DateName("month", userViewModel.DateOfBirth) + "/" + SqlFunctions.DateName("day", userViewModel.DateOfBirth) + "/" + SqlFunctions.DateName("year", userViewModel.DateOfBirth),
                             FirstName = userViewModel.FirstName,
                             LastName = userViewModel.LastName,
                             RoleId = userViewModel.RoleId,
@@ -171,7 +172,7 @@ namespace SchoolService_Master.Controllers
                 UserPassword = userModel.UserPassword,
                 IsActive = userModel.IsActive,
                 LastLoginDate = userModel.LastLoginDate,
-                DateOfBirth = userModel.DateOfBirth,
+                DateOfBirth = Convert.ToDateTime(userModel.DateOfBirth),
                 FirstName = userModel.FirstName,
                 LastName = userModel.LastName,
                 RoleId = userModel.RoleId,

@@ -14,7 +14,7 @@ namespace SchoolService_Master.ViewModels
         public string UserPassword { get; set; }
         public bool IsActive { get; set; }
         public DateTime? LastLoginDate { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public string DateOfBirth { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Name { get; set; }

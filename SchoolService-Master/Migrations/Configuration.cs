@@ -9,7 +9,8 @@ namespace SchoolService_Master.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
+            ContextKey = "SchoolService_Master.Models.SchoolServiceContext";
         }
 
         protected override void Seed(SchoolService_Master.Models.SchoolServiceContext context)

@@ -12,7 +12,7 @@ namespace SchoolService_Master.Models
         {
 
             List<Users> users = new List<Users> {
-               new Users() { UserName = "abhi", UserPassword = "123", EmailId = "abhi.karn@gmail.com", FirstName = "Abhishek", LastName = "Karn", RoleId=1, CountryId=1, StateId=1, CityId=1, IsActive=true},
+               new Users() { UserName = "abhi", UserPassword = "123", EmailId = "abhi.karn@gmail.com", FirstName = "Abhishek", LastName = "Karn", RoleId=1, CountryId=1, StateId=1, CityId=1, IsActive=true, DateOfBirth=DateTime.Now},
             };
             context.Users.AddRange(users);
             context.SaveChanges();

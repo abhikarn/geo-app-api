@@ -206,10 +206,15 @@
     <Compile Include="Controllers\MastersMobileController.cs" />
     <Compile Include="Controllers\SchoolMastersController.cs" />
     <Compile Include="Controllers\SchoolMastersMobileController.cs" />
-    <Compile Include="Migrations\201805181642124_InitialCreate.cs" />
-    <Compile Include="Migrations\201805181642124_InitialCreate.Designer.cs">
-      <DependentUpon>201805181642124_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201805241611080_InitialCreate.cs" />
+    <Compile Include="Migrations\201805241611080_InitialCreate.Designer.cs">
+      <DependentUpon>201805241611080_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805241647538_InitialCreate1.cs" />
+    <Compile Include="Migrations\201805241647538_InitialCreate1.Designer.cs">
+      <DependentUpon>201805241647538_InitialCreate1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\RefreshToken.cs" />
     <Compile Include="Provider\ClientIdAuthorizationProvider.cs" />
@@ -223,7 +228,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Branch.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Country.cs" />
@@ -308,8 +312,11 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201805181642124_InitialCreate.resx">
-      <DependentUpon>201805181642124_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201805241611080_InitialCreate.resx">
+      <DependentUpon>201805241611080_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805241647538_InitialCreate1.resx">
+      <DependentUpon>201805241647538_InitialCreate1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

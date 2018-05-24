@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.SqlServer;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -36,7 +37,7 @@ namespace SchoolService_Master.Controllers
                             UserPassword = user.UserPassword,
                             IsActive = user.IsActive,
                             LastLoginDate = user.LastLoginDate,
-                            DateOfBirth = user.DateOfBirth,
+                            DateOfBirth = SqlFunctions.DateName("month", user.DateOfBirth) + "/" + SqlFunctions.DateName("day", user.DateOfBirth) + "/" + SqlFunctions.DateName("year", user.DateOfBirth),
                             FirstName = user.FirstName,
                             LastName = user.LastName,
                             Name = user.FirstName + " " + user.LastName,
@@ -86,7 +87,7 @@ namespace SchoolService_Master.Controllers
                 UserPassword = UserViewModelNew.UserPassword,
                 IsActive = UserViewModelNew.IsActive,
                 NotFirstLogin = false,
-                DateOfBirth = UserViewModelNew.DateOfBirth,
+                //DateOfBirth = UserViewModelNew.DateOfBirth,
                 FirstName = UserViewModelNew.FirstName,
                 LastName = UserViewModelNew.LastName,
                 RoleId = UserViewModelNew.RoleId,
