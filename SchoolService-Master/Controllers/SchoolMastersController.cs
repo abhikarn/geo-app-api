@@ -51,7 +51,8 @@ namespace SchoolService_Master.Controllers
                               NursaryToPrimary3Population = b.NursaryToPrimary3Population,
                               Approved = b.Approved,
                               Source = b.Source,
-                              Status = b.Status
+                              Status = b.Status,
+                              SchoolImage = b.SchoolImage
                           };
 
             return schools;
@@ -90,7 +91,7 @@ namespace SchoolService_Master.Controllers
         [ResponseType(typeof(SchoolMasterViewModel))]
         public async Task<IHttpActionResult> PostSchoolMaster(SchoolMasterViewModel schoolMasterViewModel)
         {
-
+            //schoolMasterViewModel.SchoolImage = File.ReadAllBytes(@"D:\TestImages\bluewhale.PNG");
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -149,6 +150,7 @@ namespace SchoolService_Master.Controllers
             schoolMaster.Approved = schoolMasterViewModel.Approved;
             schoolMaster.Source = schoolMasterViewModel.Source;
             schoolMaster.Status = schoolMasterViewModel.Status;
+            schoolMaster.SchoolImage = schoolMasterViewModel.SchoolImage;
             schoolMaster.Created = DateTime.Now;
             schoolMaster.Updated = DateTime.Now;
             if (schoolMaster.Id > 0)
@@ -197,6 +199,21 @@ namespace SchoolService_Master.Controllers
         private bool SchoolMasterExists(int id)
         {
             return db.Schools.Count(e => e.Id == id) > 0;
+        }
+
+        [ResponseType(typeof(string))]
+        [HttpGet]
+        [Route("webapi/SchoolImage/")]
+        public IHttpActionResult SchoolImage(int schoolId)
+        {
+            var image = from school in db.Schools
+                        where school.Id == schoolId
+                        select new SchoolMasterViewModel
+                        {
+                            SchoolImage = school.SchoolImage
+                        };
+
+            return Ok(Convert.ToBase64String(image.FirstOrDefault().SchoolImage));
         }
     }
 }
