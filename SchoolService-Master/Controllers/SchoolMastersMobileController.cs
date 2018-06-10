@@ -26,8 +26,8 @@ namespace SchoolService_Master.Controllers
         public IQueryable<SchoolMasterViewModel> GetSchools()
         {
             var schools = from b in db.Schools
-                          //join s in db.States on b.StateId equals s.Id
-                          //where b.StateId == stateId
+                              //join s in db.States on b.StateId equals s.Id
+                              //where b.StateId == stateId
                           orderby b.SchoolName
                           select new SchoolMasterViewModel()
                           {
@@ -129,6 +129,37 @@ namespace SchoolService_Master.Controllers
                 catch (Exception ex)
                 {
                     throw ex;
+                }
+            }
+
+            return Ok(schoolMasterLst);
+            //return CreatedAtRoute("DefaultApi", new { id = schoolMaster.Id }, schoolMaster);
+        }
+
+        // POST: api/SchoolMastersMobile
+        [ResponseType(typeof(SchoolMaster))]
+        public async Task<IHttpActionResult> PatchSchoolMaster(SchoolMaster[] schoolMasters)
+        {
+            List<SchoolMaster> schoolMasterLst = new List<SchoolMaster>();
+
+            foreach (SchoolMaster schoolMaster in schoolMasters)
+            {
+                var schoolMasterModel = db.Schools.SingleOrDefault(p => p.Id == schoolMaster.Id);
+                if (schoolMasterModel != null)
+                {
+                    schoolMasterModel.Updated = DateTime.Now;
+                    schoolMasterModel.SchoolImage = schoolMaster.SchoolImage;
+                }
+
+                try
+                {
+                    db.Entry(schoolMaster).State = EntityState.Modified;
+                    await db.SaveChangesAsync();
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    return NotFound();
                 }
             }
 
