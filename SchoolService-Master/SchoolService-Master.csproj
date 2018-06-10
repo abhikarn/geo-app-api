@@ -248,6 +248,7 @@
     <Compile Include="ViewModels\CountryViewModel.cs" />
     <Compile Include="ViewModels\GeoHierarchyViewModel.cs" />
     <Compile Include="ViewModels\Masters.cs" />
+    <Compile Include="ViewModels\ResetViewModel.cs" />
     <Compile Include="ViewModels\RoleMasterViewModel.cs" />
     <Compile Include="ViewModels\SchoolGeoHierarchyMappingViewModel.cs" />
     <Compile Include="ViewModels\SchoolMasterMultiSelect.cs" />

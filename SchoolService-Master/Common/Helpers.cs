@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.SqlServer;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
+using SchoolService_Master.Models;
+using SchoolService_Master.ViewModels;
 
 namespace SchoolService_Master.Common
 {
@@ -37,6 +40,12 @@ namespace SchoolService_Master.Common
                 return new DateTime();
             }
         }
+
+       
+
+        //public static object MapModelViewModel<T>(T param) where T : class
+        //{
+        //}
 
     }
 }

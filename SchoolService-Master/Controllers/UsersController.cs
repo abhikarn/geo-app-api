@@ -38,7 +38,7 @@ namespace SchoolService_Master.Controllers
                             Id = user.Id,
                             UserName = user.UserName,
                             EmailId = user.EmailId,
-                            UserPassword = user.UserPassword,
+                            //UserPassword = user.UserPassword,
                             IsActive = user.IsActive,
                             LastLoginDate = user.LastLoginDate,
                             DateOfBirth = SqlFunctions.DateName("month", user.DateOfBirth) + "/" + SqlFunctions.DateName("day", user.DateOfBirth) + "/" + SqlFunctions.DateName("year", user.DateOfBirth),
@@ -74,7 +74,7 @@ namespace SchoolService_Master.Controllers
                             Id = user.Id,
                             UserName = user.UserName,
                             EmailId = user.EmailId,
-                            UserPassword = user.UserPassword,
+                            //UserPassword = user.UserPassword,
                             IsActive = user.IsActive,
                             LastLoginDate = user.LastLoginDate,
                             DateOfBirth = SqlFunctions.DateName("month", user.DateOfBirth) + "/" + SqlFunctions.DateName("day", user.DateOfBirth) + "/" + SqlFunctions.DateName("year", user.DateOfBirth),
@@ -164,6 +164,11 @@ namespace SchoolService_Master.Controllers
                             NotFirstLogin = userViewModel.NotFirstLogin
                         };
             UserViewModel userModel = users.FirstOrDefault();
+            if (userModel == null)
+            {
+                return BadRequest();
+            }
+            userModel.UserPassword = string.Concat(userModel.FirstName.Substring(0, 2), userModel.DateOfBirth.Substring(0, 2));
             Users user = new Users
             {
                 Id = userModel.Id,
@@ -187,7 +192,6 @@ namespace SchoolService_Master.Controllers
             {
                 return PutUsers(user);
             }
-
             db.Users.Add(user);
             await db.SaveChangesAsync();
 
@@ -211,20 +215,65 @@ namespace SchoolService_Master.Controllers
         }
 
         // GET: webapi/Token comment
-        [HttpPost]
-        [ResponseType(typeof(Users))]
+        [HttpPatch]
+        [ResponseType(typeof(UserViewModel))]
         [Route("webapi/ResetPassword")]
-        public IHttpActionResult ResetPassword(Users users)
+        public IHttpActionResult ResetPassword(ResetViewModel resetModel)
         {
-            db.Entry(users).State = EntityState.Modified;
+            Users user;
+            if (string.IsNullOrWhiteSpace(resetModel.OldPassword))
+            {
+                user = db.Users.SingleOrDefault(p => p.Id == resetModel.UserId);
+            }
+            else
+            {
+                user = db.Users.SingleOrDefault(p => p.Id == resetModel.UserId && p.UserPassword == resetModel.OldPassword);
+            }
+
+            if (user == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+            user.UserPassword = resetModel.Password;
+            user.LastLoginDate = DateTime.Now;
+            user.NotFirstLogin = true;
+            db.Entry(user).State = EntityState.Modified;
+            //db.Entry(user).Property(x => x.UserPassword).IsModified = true;
 
             try
             {
                 db.SaveChanges();
+
+                var users = from state in db.States
+                            join role in db.Roles on user.RoleId equals role.Id
+                            join branch in db.Branches on state.BranchId equals branch.Id
+                            join zone in db.Zones on branch.ZoneId equals zone.Id
+                            join country in db.Countries on zone.CountryId equals country.Id
+                            where state.Id == user.StateId
+                            select new UserViewModel
+                            {
+                                Id = user.Id,
+                                UserName = user.UserName,
+                                EmailId = user.EmailId,
+                                IsActive = user.IsActive,
+                                LastLoginDate = user.LastLoginDate,
+                                DateOfBirth = SqlFunctions.DateName("month", user.DateOfBirth) + "/" + SqlFunctions.DateName("day", user.DateOfBirth) + "/" + SqlFunctions.DateName("year", user.DateOfBirth),
+                                FirstName = user.FirstName,
+                                LastName = user.LastName,
+                                RoleId = user.RoleId,
+                                RoleName = role.Name,
+                                Status = user.Status,
+                                CountryId = user.CountryId,
+                                CountryName = country.Name,
+                                StateId = user.StateId,
+                                StateName = state.Name,
+                                NotFirstLogin = user.NotFirstLogin
+                            };
+                return Ok(users.FirstOrDefault());
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UsersExists(users.Id))
+                if (!UsersExists(resetModel.UserId))
                 {
                     return NotFound();
                 }
@@ -233,8 +282,6 @@ namespace SchoolService_Master.Controllers
                     throw;
                 }
             }
-
-            return StatusCode(HttpStatusCode.NoContent);
         }
 
         protected override void Dispose(bool disposing)
@@ -250,5 +297,6 @@ namespace SchoolService_Master.Controllers
         {
             return db.Users.Count(e => e.Id == id) > 0;
         }
+
     }
 }

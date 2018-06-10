@@ -34,7 +34,6 @@ namespace SchoolService_Master.Controllers
                             Id = user.Id,
                             UserName = user.UserName,
                             EmailId = user.EmailId,
-                            UserPassword = user.UserPassword,
                             IsActive = user.IsActive,
                             LastLoginDate = user.LastLoginDate,
                             DateOfBirth = SqlFunctions.DateName("month", user.DateOfBirth) + "/" + SqlFunctions.DateName("day", user.DateOfBirth) + "/" + SqlFunctions.DateName("year", user.DateOfBirth),
