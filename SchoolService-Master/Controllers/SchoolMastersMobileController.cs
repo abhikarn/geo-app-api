@@ -145,19 +145,20 @@ namespace SchoolService_Master.Controllers
             foreach (SchoolMaster schoolMaster in schoolMasters)
             {
                 var schoolMasterModel = db.Schools.SingleOrDefault(p => p.Id == schoolMaster.Id);
-                if (schoolMasterModel != null)
+                if (schoolMasterModel == null)
                 {
-                    schoolMasterModel.Updated = DateTime.Now;
-                    schoolMasterModel.SchoolImage = schoolMaster.SchoolImage;
+                    return NotFound();
                 }
 
                 try
                 {
+                    schoolMasterModel.Updated = DateTime.Now;
+                    schoolMasterModel.SchoolImage = schoolMaster.SchoolImage;
                     db.Entry(schoolMaster).State = EntityState.Modified;
                     await db.SaveChangesAsync();
                     return Ok();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return NotFound();
                 }

@@ -11,7 +11,7 @@ namespace SchoolService_Master.Models
         public SchoolServiceContext()
             : base("name=SchoolServiceConnection")
         {
-            //Database.SetInitializer(new DbInitializer());
+            Database.SetInitializer(new DbInitializer());
         }
         public virtual DbSet<SchoolMaster> Schools { get; set; }
         public virtual DbSet<SupervisorMaster> Supervisors { get; set; }

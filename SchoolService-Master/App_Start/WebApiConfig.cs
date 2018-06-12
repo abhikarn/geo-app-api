@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Microsoft.Owin.Security.OAuth;
+using System.Configuration;
 
 namespace SchoolService_Master
 {
@@ -12,8 +13,11 @@ namespace SchoolService_Master
     {
         public static void Register(HttpConfiguration config)
         {
+            string origin = ConfigurationManager.AppSettings["Cors-Origin"];
+            string header = ConfigurationManager.AppSettings["Cors-Header"];
+            string methods = ConfigurationManager.AppSettings["Cors-Methods"];
             // Web API configuration and services
-            EnableCorsAttribute cors = new EnableCorsAttribute("*", "*", "*");
+            EnableCorsAttribute cors = new EnableCorsAttribute(origin, header, methods);
 
             // Web API routes
             config.EnableCors(cors);

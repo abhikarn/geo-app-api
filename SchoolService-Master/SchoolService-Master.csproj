@@ -216,6 +216,10 @@
     <Compile Include="Migrations\201805241647538_InitialCreate1.Designer.cs">
       <DependentUpon>201805241647538_InitialCreate1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806111956323_initial.cs" />
+    <Compile Include="Migrations\201806111956323_initial.Designer.cs">
+      <DependentUpon>201806111956323_initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\RefreshToken.cs" />
@@ -320,6 +324,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805241647538_InitialCreate1.resx">
       <DependentUpon>201805241647538_InitialCreate1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806111956323_initial.resx">
+      <DependentUpon>201806111956323_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
