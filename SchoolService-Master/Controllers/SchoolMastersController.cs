@@ -91,7 +91,7 @@ namespace SchoolService_Master.Controllers
         [ResponseType(typeof(SchoolMasterViewModel))]
         public async Task<IHttpActionResult> PostSchoolMaster(SchoolMasterViewModel schoolMasterViewModel)
         {
-            //schoolMasterViewModel.SchoolImage = File.ReadAllBytes(@"D:\TestImages\bluewhale.PNG");
+            //schoolMasterViewModel.SchoolImage = File.ReadAllBytes(@"D:\Rhino.PNG");
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -212,8 +212,10 @@ namespace SchoolService_Master.Controllers
                         {
                             SchoolImage = school.SchoolImage
                         };
-
-            return Ok(Convert.ToBase64String(image.FirstOrDefault().SchoolImage));
+            if (image.FirstOrDefault().SchoolImage != null && image.FirstOrDefault().SchoolImage.Length > 0)
+                return Ok(Convert.ToBase64String(image.FirstOrDefault().SchoolImage));
+            else
+                return StatusCode(HttpStatusCode.NoContent);
         }
     }
 }
