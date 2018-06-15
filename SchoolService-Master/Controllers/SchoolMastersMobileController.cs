@@ -50,7 +50,8 @@ namespace SchoolService_Master.Controllers
                               NursaryToPrimary3Population = b.NursaryToPrimary3Population,
                               Approved = b.Approved,
                               Source = b.Source,
-                              Status = b.Status
+                              Status = b.Status,
+                              SchoolImage = b.SchoolImage
                           };
 
             return schools;
@@ -137,8 +138,9 @@ namespace SchoolService_Master.Controllers
         }
 
         // POST: api/SchoolMastersMobile
-        [ResponseType(typeof(SchoolMaster))]
-        public async Task<IHttpActionResult> PatchSchoolMaster(SchoolMaster[] schoolMasters)
+        [ResponseType(typeof(object))]
+        [Route("imageUpload")]
+        public async Task<IHttpActionResult> PatchSchoolMaster(dynamic[] schoolMasters)
         {
             List<SchoolMaster> schoolMasterLst = new List<SchoolMaster>();
 
