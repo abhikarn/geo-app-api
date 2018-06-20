@@ -32,8 +32,17 @@ namespace SchoolService_Master.Common
         {
             try
             {
-                DateTime dt = DateTime.ParseExact(date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                return dt;
+                if (!string.IsNullOrWhiteSpace(date))
+                {
+                    Char[] splitChars = new char[] { '/', '-' };
+                    if (date.IndexOfAny(splitChars) > -1)
+                    {
+                        DateTime formatDate = DateTime.Parse(string.Concat(date.Split(splitChars)[2], "-", date.Split(splitChars)[0], "-", date.Split(splitChars)[1]));
+                        return formatDate;
+                    }
+                }
+                //DateTime dt = DateTime.ParseExact(date, "MM-dd-yyyy", CultureInfo.InvariantCulture);
+                return new DateTime();
             }
             catch (Exception)
             {
@@ -41,7 +50,7 @@ namespace SchoolService_Master.Common
             }
         }
 
-       
+
 
         //public static object MapModelViewModel<T>(T param) where T : class
         //{

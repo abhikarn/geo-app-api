@@ -139,7 +139,7 @@ namespace SchoolService_Master.Controllers
 
         // POST: api/SchoolMastersMobile
         [ResponseType(typeof(object))]
-        [Route("imageUpload")]
+        [Route("webapi/imageUpload")]
         public async Task<IHttpActionResult> PatchSchoolMaster(dynamic[] schoolMasters)
         {
             List<SchoolMaster> schoolMasterLst = new List<SchoolMaster>();
