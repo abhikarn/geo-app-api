@@ -28,9 +28,9 @@ namespace SchoolService_Master.Controllers
         public IQueryable<UserViewModel> GetUsers()
         {
             var users = from user in db.Users
-                        join role in db.Roles on user.RoleId equals role.Id
-                        join country in db.Countries on user.CountryId equals country.Id
-                        join state in db.States on user.StateId equals state.Id
+                        //join role in db.Roles on user.RoleId equals role.Id
+                        //join country in db.Countries on user.CountryId equals country.Id
+                        //join state in db.States on user.StateId equals state.Id
                         //join city in db.City on user.CityId equals city.Id
                         orderby user.UserName
                         select new UserViewModel
@@ -38,7 +38,7 @@ namespace SchoolService_Master.Controllers
                             Id = user.Id,
                             UserName = user.UserName,
                             EmailId = user.EmailId,
-                            //UserPassword = user.UserPassword,
+                            UserPassword = user.UserPassword,
                             IsActive = user.IsActive,
                             LastLoginDate = user.LastLoginDate,
                             DateOfBirth = SqlFunctions.DatePart("month", user.DateOfBirth) + "/" + SqlFunctions.DateName("day", user.DateOfBirth) + "/" + SqlFunctions.DateName("year", user.DateOfBirth),
@@ -46,12 +46,14 @@ namespace SchoolService_Master.Controllers
                             LastName = user.LastName,
                             Name = user.FirstName + " " + user.LastName,
                             RoleId = user.RoleId,
-                            RoleName = role.Name,
+                            //RoleName = role.Name,
                             Status = user.Status,
                             CountryId = user.CountryId,
-                            CountryName = country.Name,
+                            //CountryName = country.Name,
                             StateId = user.StateId,
-                            StateName = state.Name,
+                            //StateName = state.Name,
+                            ZoneId = user.ZoneId,
+                            BranchId = user.BranchId,
                             NotFirstLogin = user.NotFirstLogin
                             //CityId = user.CityId,
                             //CityName = city.CityName
@@ -74,7 +76,7 @@ namespace SchoolService_Master.Controllers
                             Id = user.Id,
                             UserName = user.UserName,
                             EmailId = user.EmailId,
-                            //UserPassword = user.UserPassword,
+                            UserPassword = user.UserPassword,
                             IsActive = user.IsActive,
                             LastLoginDate = user.LastLoginDate,
                             DateOfBirth = SqlFunctions.DatePart("month", user.DateOfBirth) + "/" + SqlFunctions.DateName("day", user.DateOfBirth) + "/" + SqlFunctions.DateName("year", user.DateOfBirth),
@@ -138,53 +140,53 @@ namespace SchoolService_Master.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            var users = from state in db.States
-                        join branch in db.Branches on state.BranchId equals branch.Id
-                        join zone in db.Zones on branch.ZoneId equals zone.Id
-                        join country in db.Countries on zone.CountryId equals country.Id
-                        where state.Id == userViewModel.StateId
-                        select new UserViewModel
-                        {
-                            Id = userViewModel.Id,
-                            UserName = userViewModel.UserName,
-                            EmailId = userViewModel.EmailId,
-                            UserPassword = userViewModel.UserPassword,
-                            IsActive = userViewModel.IsActive,
-                            LastLoginDate = userViewModel.LastLoginDate,
-                            DateOfBirth = userViewModel.DateOfBirth,//SqlFunctions.DateName("month", userViewModel.DateOfBirth) + "/" + SqlFunctions.DateName("day", userViewModel.DateOfBirth) + "/" + SqlFunctions.DateName("year", userViewModel.DateOfBirth),
-                            FirstName = userViewModel.FirstName,
-                            LastName = userViewModel.LastName,
-                            RoleId = userViewModel.RoleId,
-                            Status = userViewModel.Status,
-                            CountryId = country.Id,
-                            ZoneId = zone.Id,
-                            BranchId = branch.Id,
-                            StateId = userViewModel.StateId,
-                            NotFirstLogin = userViewModel.NotFirstLogin
-                        };
-            UserViewModel userModel = users.FirstOrDefault();
-            if (userModel == null)
+            userViewModel = MapRoleBasedUser(userViewModel);
+            //var users = from state in db.States
+            //            join branch in db.Branches on state.BranchId equals branch.Id
+            //            join zone in db.Zones on branch.ZoneId equals zone.Id
+            //            join country in db.Countries on zone.CountryId equals country.Id
+            //            where state.Id == userViewModel.StateId
+            //            select new UserViewModel
+            //            {
+            //                Id = userViewModel.Id,
+            //                UserName = userViewModel.UserName,
+            //                EmailId = userViewModel.EmailId,
+            //                UserPassword = userViewModel.UserPassword,
+            //                IsActive = userViewModel.IsActive,
+            //                LastLoginDate = userViewModel.LastLoginDate,
+            //                DateOfBirth = userViewModel.DateOfBirth,//SqlFunctions.DateName("month", userViewModel.DateOfBirth) + "/" + SqlFunctions.DateName("day", userViewModel.DateOfBirth) + "/" + SqlFunctions.DateName("year", userViewModel.DateOfBirth),
+            //                FirstName = userViewModel.FirstName,
+            //                LastName = userViewModel.LastName,
+            //                RoleId = userViewModel.RoleId,
+            //                Status = userViewModel.Status,
+            //                CountryId = country.Id,
+            //                ZoneId = zone.Id,
+            //                BranchId = branch.Id,
+            //                StateId = userViewModel.StateId,
+            //                NotFirstLogin = userViewModel.NotFirstLogin
+            //            };
+            //UserViewModel userModel = users.FirstOrDefault();
+            if (userViewModel == null)
             {
                 return BadRequest();
             }
-            userModel.UserPassword = string.Concat(userModel.FirstName.Substring(0, 2), userModel.DateOfBirth.Substring(0, 2));
+            //userModel.UserPassword = string.Concat(userModel.FirstName.Substring(0, 2), userModel.DateOfBirth.Substring(0, 2));
             Users user = new Users
             {
-                Id = userModel.Id,
-                UserName = userModel.UserName,
-                EmailId = userModel.EmailId,
-                UserPassword = userModel.UserPassword,
-                IsActive = userModel.IsActive,
-                LastLoginDate = userModel.LastLoginDate,
-                DateOfBirth = Helpers.StringToDate(userModel.DateOfBirth),
-                FirstName = userModel.FirstName,
-                LastName = userModel.LastName,
-                RoleId = userModel.RoleId,
-                Status = userModel.Status,
-                CountryId = userModel.CountryId,
-                ZoneId = userModel.ZoneId,
-                BranchId = userModel.BranchId,
+                Id = userViewModel.Id,
+                UserName = userViewModel.UserName,
+                EmailId = userViewModel.EmailId,
+                UserPassword = userViewModel.UserPassword,
+                IsActive = userViewModel.IsActive,
+                LastLoginDate = userViewModel.LastLoginDate,
+                DateOfBirth = Helpers.StringToDate(userViewModel.DateOfBirth),
+                FirstName = userViewModel.FirstName,
+                LastName = userViewModel.LastName,
+                RoleId = userViewModel.RoleId,
+                Status = userViewModel.Status,
+                CountryId = userViewModel.CountryId,
+                ZoneId = userViewModel.ZoneId,
+                BranchId = userViewModel.BranchId,
                 StateId = userViewModel.StateId,
                 NotFirstLogin = userViewModel.NotFirstLogin
             };
@@ -296,6 +298,36 @@ namespace SchoolService_Master.Controllers
         private bool UsersExists(int id)
         {
             return db.Users.Count(e => e.Id == id) > 0;
+        }
+
+        private UserViewModel MapRoleBasedUser(UserViewModel userViewModel)
+        {
+            switch (userViewModel.RoleId)
+            {
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    userViewModel.ZoneId = 0;
+                    userViewModel.BranchId = 0;
+                    userViewModel.StateId = 0;
+                    break;
+                case 5:
+                    userViewModel.BranchId = 0;
+                    userViewModel.StateId = 0;
+                    break;
+                case 6:
+                    userViewModel.StateId = 0;
+                    break;
+                default:
+                    userViewModel.ZoneId = 0;
+                    userViewModel.BranchId = 0;
+                    userViewModel.StateId = 0;
+                    userViewModel.CountryId = 0;
+                    break;
+            }
+            return userViewModel;
         }
 
     }

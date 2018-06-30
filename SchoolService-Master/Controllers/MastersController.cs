@@ -17,7 +17,7 @@ namespace SchoolService_Master.Controllers
         //[Authorize]
         //[Route("webapi/Masters/{countryId}/{stateId}/{cityId}")]
         // GET: webapi/Masters
-        public Masters GetMasters(int stateId)
+        public Masters GetMasters()
         {
             Masters masters = new Masters();
             List<Role> role = db.Roles.ToList();
