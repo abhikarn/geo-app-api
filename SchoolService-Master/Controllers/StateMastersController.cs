@@ -37,6 +37,7 @@ namespace SchoolService_Master.Controllers
             var stateMaster = from b in db.States
                               join br in db.Branches on b.BranchId equals br.Id
                               where b.BranchId == branchId
+                              orderby b.Name
                               select new StateMasterViewModel()
                               {
                                   Id = b.Id,

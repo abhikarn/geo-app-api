@@ -54,7 +54,8 @@ namespace SchoolService_Master.Controllers
                             //StateName = state.Name,
                             ZoneId = user.ZoneId,
                             BranchId = user.BranchId,
-                            NotFirstLogin = user.NotFirstLogin
+                            NotFirstLogin = user.NotFirstLogin,
+                            ParentId = user.ParentId
                             //CityId = user.CityId,
                             //CityName = city.CityName
                         };
@@ -90,7 +91,8 @@ namespace SchoolService_Master.Controllers
                             CountryName = country.Name,
                             StateId = user.StateId,
                             StateName = state.Name,
-                            NotFirstLogin = user.NotFirstLogin
+                            NotFirstLogin = user.NotFirstLogin,
+                            ParentId = user.ParentId
                         };
             if (countryId > 0)
                 users = users.Where(x => x.CountryId == countryId);
@@ -188,7 +190,8 @@ namespace SchoolService_Master.Controllers
                 ZoneId = userViewModel.ZoneId,
                 BranchId = userViewModel.BranchId,
                 StateId = userViewModel.StateId,
-                NotFirstLogin = userViewModel.NotFirstLogin
+                NotFirstLogin = userViewModel.NotFirstLogin,
+                ParentId = userViewModel.ParentId
             };
             if (userViewModel.Id > 0)
             {

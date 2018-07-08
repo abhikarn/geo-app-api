@@ -10,7 +10,7 @@ namespace SchoolService_Master.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
             ContextKey = "SchoolService_Master.Models.SchoolServiceContext";
         }
 
@@ -118,12 +118,12 @@ namespace SchoolService_Master.Migrations
           );
 
             context.Roles.AddOrUpdate(x => x.Id,
-               new Role() { Name = "Admin", Description = "Admin", IsActive = true },
-               new Role() { Name = "Supervisor", Description = "Supervisor", IsActive = true },
-               new Role() { Name = "Marketing User", Description = "Hierarchy user", IsActive = true },
-               new Role() { Name = "Country Head", Description = "Country Head user", IsActive = true },
-               new Role() { Name = "Zone Head", Description = "Zone user", IsActive = true },
-               new Role() { Name = "Branch Head", Description = "Branch user", IsActive = true }
+               new Role() { Name = "Admin", Description = "Admin", RoleType = 1, IsActive = true },
+               new Role() { Name = "Supervisor", Description = "Supervisor", RoleType = 5, IsActive = true },
+               new Role() { Name = "Marketing User", Description = "Hierarchy user", RoleType = 6, IsActive = true },
+               new Role() { Name = "Country Head", Description = "Country Head user", RoleType = 2, IsActive = true },
+               new Role() { Name = "Zone Head", Description = "Zone user", RoleType = 3, IsActive = true },
+               new Role() { Name = "Branch Head", Description = "Branch user", RoleType = 4, IsActive = true }
           );
         }
     }

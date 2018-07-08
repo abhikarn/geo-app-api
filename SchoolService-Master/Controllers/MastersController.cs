@@ -20,11 +20,9 @@ namespace SchoolService_Master.Controllers
         public Masters GetMasters()
         {
             Masters masters = new Masters();
-            List<Role> role = db.Roles.ToList();
-            //List<SchoolMaster> LstShoolMaster = db.Schools.ToList();
             List<SchoolMasterViewModel> LstShoolMaster = (new SchoolMastersController().GetSchools()).ToList();
             masters.CountryMaster = db.Countries.OrderBy(x => x.Name).ToList();
-            masters.RoleMaster = db.Roles.OrderBy(x => x.Name).ToList();
+            masters.RoleMaster = db.Roles.OrderBy(x => x.RoleType).ToList();
             masters.ZoneMaster = db.Zones.OrderBy(x => x.Name).ToList();
             masters.BranchMaster = db.Branches.OrderBy(x => x.Name).ToList();
             masters.StateMaster = db.States.OrderBy(x => x.Name).ToList();
